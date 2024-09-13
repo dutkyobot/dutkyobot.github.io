@@ -1,0 +1,89 @@
+# Let's create a basic homepage HTML and save it as 'index.html'
+
+basic_homepage_html = """
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기본 홈페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        nav a:hover {
+            background-color: #575757;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 헤더 -->
+    <header>
+        <h1>환영합니다!</h1>
+        <p>이것은 기본적인 웹사이트의 홈 페이지입니다.</p>
+    </header>
+
+    <!-- 네비게이션 -->
+    <nav>
+        <a href="#">홈</a>
+        <a href="#">소개</a>
+        <a href="#">서비스</a>
+        <a href="#">연락처</a>
+    </nav>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <h2>메인 콘텐츠</h2>
+        <p>여기에 웹사이트의 주요 내용이 들어갑니다.</p>
+    </main>
+
+    <!-- 푸터 -->
+    <footer>
+        <p>&copy; 2024 기본 웹사이트. 모든 권리 보유.</p>
+    </footer>
+
+</body>
+</html>
+"""
+
+# Save the HTML code as index.html
+file_path = '/mnt/data/index.html'
+with open(file_path, 'w') as file:
+    file.write(basic_homepage_html)
+
+file_path
