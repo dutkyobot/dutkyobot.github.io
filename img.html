@@ -60,56 +60,114 @@
 </body>
 </html>
 
-from flask import Flask, render_template, request, redirect, url_for, flash
-import os
-from werkzeug.utils import secure_filename
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 업로드</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .upload-container {
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <h1>이미지 업로드</h1>
+        <!-- 업로드 폼 -->
+        <form action="index.php" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required><br>
+            <input type="submit" value="업로드">
+        </form>
 
-app = Flask(__name__)
+        <!-- 메시지 출력 -->
+        <div class="message">
+            <?php
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // 업로드 폴더 설정
+                $target_dir = "uploads/";
+                $target_file = $target_dir . basename($_FILES["image"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-# 이미지 업로드 폴더 설정
-UPLOAD_FOLDER = 'uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+                // 파일이 이미지인지 확인
+                $check = getimagesize($_FILES["image"]["tmp_name"]);
+                if($check !== false) {
+                    echo "파일은 이미지입니다 - " . $check["mime"] . ".<br>";
+                    $uploadOk = 1;
+                } else {
+                    echo "파일이 이미지가 아닙니다.<br>";
+                    $uploadOk = 0;
+                }
 
-# 허용할 파일 확장자
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+                // 파일이 이미 있는지 확인
+                if (file_exists($target_file)) {
+                    echo "죄송합니다. 파일이 이미 존재합니다.<br>";
+                    $uploadOk = 0;
+                }
 
-# 비밀 키 설정 (플래시 메시지용)
-app.secret_key = 'your_secret_key'
+                // 파일 크기 제한 (예: 5MB)
+                if ($_FILES["image"]["size"] > 5000000) {
+                    echo "죄송합니다. 파일이 너무 큽니다.<br>";
+                    $uploadOk = 0;
+                }
 
-# 파일 확장자 체크 함수
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+                // 허용되는 파일 형식 확인
+                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+                    echo "죄송합니다. JPG, JPEG, PNG, GIF 파일만 허용됩니다.<br>";
+                    $uploadOk = 0;
+                }
 
-# 이미지 업로드 처리
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'image' not in request.files:
-        flash('파일이 선택되지 않았습니다.')
-        return redirect(request.url)
-
-    file = request.files['image']
-
-    if file.filename == '':
-        flash('파일이 선택되지 않았습니다.')
-        return redirect(request.url)
-
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        flash('이미지가 성공적으로 업로드되었습니다.')
-        return redirect(url_for('upload_page'))
-
-    else:
-        flash('허용되지 않는 파일 형식입니다.')
-        return redirect(request.url)
-
-# 업로드 페이지 렌더링
-@app.route('/')
-def upload_page():
-    return render_template('index.html')
-
-# 서버 실행
-if __name__ == '__main__':
-    if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)
-    app.run(debug=True)
+                // 오류가 없을 때 파일 업로드
+                if ($uploadOk == 0) {
+                    echo "죄송합니다. 파일이 업로드되지 않았습니다.<br>";
+                } else {
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                        echo "파일 ". basename($_FILES["image"]["name"]). "이(가) 성공적으로 업로드되었습니다.<br>";
+                    } else {
+                        echo "죄송합니다. 파일 업로드 중 문제가 발생했습니다.<br>";
+                    }
+                }
+            }
+            ?>
+        </div>
+    </div>
+</body>
+</html>
