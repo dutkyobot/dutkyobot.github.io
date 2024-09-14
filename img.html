@@ -1,56 +1,44 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이미지 업로드</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .upload-container {
-            background-color: #fff;
-            padding: 30px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            text-align: center;
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-        input[type="file"] {
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        input[type="submit"] {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        input[type="submit"]:hover {
-            background-color: #218838;
-        }
-        .message {
-            margin-top: 15px;
-            font-size: 14px;
-        }
-    </style>
+    <title>Image Upload</title>
 </head>
 <body>
-    <div class="upload-container">
-        <h1>이미지 업로드</h1>
-        <!-- 이미지 업로드 폼 -->
-        <form action="index.php" method="post" enctype="multipart/form-data">
-            <input type="file" name="image" accept="image/*" required><br>
-            <input type="submit" value="업로드">
-        </form>
+    <h1>Image Upload</h1>
+    <form id="uploadForm">
+        <input type="file" id="imageInput" accept="image/*" />
+        <button type="submit">Upload Image</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData();
+            const fileInput = document.getElementById('imageInput');
+
+            if (fileInput.files.length > 0) {
+                formData.append('image', fileInput.files[0]);
+
+                fetch('/upload', { // Replace with your server endpoint
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = 'Upload successful!';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('result').innerText = 'Upload failed.';
+                });
+            } else {
+                document.getElementById('result').innerText = 'No file selected.';
+            }
+        });
+    </script>
+</body>
+</html>
