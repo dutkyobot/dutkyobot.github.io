@@ -1,0 +1,53 @@
+from flask import Flask, render_template, request, redirect, url_for, flash
+import os
+from werkzeug.utils import secure_filename
+
+app = Flask(__name__)
+
+# 이미지 업로드 폴더 설정
+UPLOAD_FOLDER = 'uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# 허용할 파일 확장자
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+# 비밀 키 설정 (플래시 메시지용)
+app.secret_key = 'your_secret_key'
+
+# 파일 확장자 체크 함수
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# 이미지 업로드 처리
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'image' not in request.files:
+        flash('파일이 선택되지 않았습니다.')
+        return redirect(request.url)
+
+    file = request.files['image']
+
+    if file.filename == '':
+        flash('파일이 선택되지 않았습니다.')
+        return redirect(request.url)
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        flash('이미지가 성공적으로 업로드되었습니다.')
+        return redirect(url_for('upload_page'))
+
+    else:
+        flash('허용되지 않는 파일 형식입니다.')
+        return redirect(request.url)
+
+# 업로드 페이지 렌더링
+@app.route('/')
+def upload_page():
+    return render_template('index.html')
+
+# 서버 실행
+if __name__ == '__main__':
+    if not os.path.exists(UPLOAD_FOLDER):
+        os.makedirs(UPLOAD_FOLDER)
+    app.run(debug=True)
