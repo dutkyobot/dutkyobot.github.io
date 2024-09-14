@@ -6,39 +6,14 @@
     <title>Image Upload</title>
 </head>
 <body>
-    <h1>Image Upload</h1>
-    <form id="uploadForm">
-        <input type="file" id="imageInput" accept="image/*" />
+    <h1>Upload an Image</h1>
+    <!-- Form for uploading image -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="image">Select image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
         <button type="submit">Upload Image</button>
     </form>
+    <!-- Display result message -->
     <div id="result"></div>
-
-    <script>
-        document.getElementById('uploadForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-
-            const formData = new FormData();
-            const fileInput = document.getElementById('imageInput');
-
-            if (fileInput.files.length > 0) {
-                formData.append('image', fileInput.files[0]);
-
-                fetch('/upload', { // Replace with your server endpoint
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('result').innerText = 'Upload successful!';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('result').innerText = 'Upload failed.';
-                });
-            } else {
-                document.getElementById('result').innerText = 'No file selected.';
-            }
-        });
-    </script>
 </body>
 </html>
