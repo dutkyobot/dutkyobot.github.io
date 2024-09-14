@@ -4,16 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
     <h1>Upload an Image</h1>
     <!-- Form for uploading image -->
     <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="image">Select image:</label>
+        <label for="image">Select an image to upload:</label>
         <input type="file" id="image" name="image" accept="image/*" required>
         <button type="submit">Upload Image</button>
     </form>
     <!-- Display result message -->
     <div id="result"></div>
+
+    <script>
+        // JavaScript to handle form submission and display result
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+            const resultDiv = document.getElementById('result');
+
+            fetch(this.action, {
+                method: this.method,
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                resultDiv.innerText = result; // Display server response
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultDiv.innerText = 'Upload failed.';
+            });
+        });
+    </script>
 </body>
 </html>
