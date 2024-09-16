@@ -1,147 +1,122 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head><link rel="icon" href="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png" type="image/png"></head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>두쿄봇</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            line-height: 1.6;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        nav {
-            background-color: #333;
-            padding: 15px;
-            text-align: center;
-            position: absolute;
-            top: 0;
-            width: 100%;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            padding: 10px;
-            font-weight: bold;
-            border-radius: 4px;
-        }
-        nav a:hover {
-            background-color: #575757;
-        }
-        main {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        main h2 {
-            margin-bottom: 20px;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-    
-    <nav>
-        <a href="https://dutkyobot.github.io">홈</a>
-        <a href="https://dutkyobot.github.io/img">이미지 업로드</a>
-        <a href="https://dutkyobot.github.io">3</a>
-        <a href="https://dutkyobot.github.io">4</a>
-    </nav>
-        
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Upload</title>
+    <title>이미지 호스팅 사이트</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
         }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-        input[type="file"] {
-            margin: 10px 0;
+        h1 {
+            text-align: center;
+            color: #333;
         }
-        button {
+        .image-upload {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .image-upload input[type="file"] {
+            display: none;
+        }
+        .image-upload label {
+            display: inline-block;
             padding: 10px 20px;
             background-color: #007bff;
             color: white;
-            border: none;
-            border-radius: 5px;
             cursor: pointer;
+            border-radius: 5px;
         }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #result {
+        .image-preview {
+            text-align: center;
             margin-top: 20px;
-            font-size: 16px;
+        }
+        .image-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            display: none;
+        }
+        .uploaded-image {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .uploaded-image img {
+            max-width: 100%;
+            max-height: 400px;
         }
     </style>
 </head>
 <body>
-    <h1>이미지 업로드</h1>
-    <!-- Form for uploading image -->
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="image">업로드할 이미지를 선택하세요.</label>
-        <input type="file" id="image" name="image" accept="image/*" required>
-        <button type="submit">업로드</button>
-    </form>
-    <!-- Display result message -->
-    <div id="result"></div>
+    <div class="container">
+        <h1>이미지 호스팅 사이트</h1>
+        
+        <div class="image-upload">
+            <input type="file" id="imageInput" accept="image/*">
+            <label for="imageInput">이미지 선택</label>
+        </div>
+
+        <div class="image-preview">
+            <img id="previewImage" alt="이미지 미리보기">
+        </div>
+
+        <div class="uploaded-image">
+            <h3>업로드된 이미지:</h3>
+            <img id="uploadedImage" alt="업로드된 이미지">
+        </div>
+    </div>
 
     <script>
-        // JavaScript to handle form submission and display result
-        document.querySelector('form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
+        const imageInput = document.getElementById('imageInput');
+        const previewImage = document.getElementById('previewImage');
+        const uploadedImage = document.getElementById('uploadedImage');
 
-            const formData = new FormData(this);
-            const resultDiv = document.getElementById('result');
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
 
-            fetch(this.action, {
-                method: this.method,
-                body: formData
-            })
-            .then(response => response.text())
-            .then(result => {
-                resultDiv.innerText = result; // Display server response
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                resultDiv.innerText = 'Upload failed.';
-            });
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // 미리보기 이미지 표시
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                }
+
+                reader.readAsDataURL(file);
+
+                // 서버로 파일 업로드
+                const formData = new FormData();
+                formData.append('image', file);
+
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.url) {
+                        // 업로드된 이미지 URL 표시
+                        uploadedImage.src = data.url;
+                        uploadedImage.style.display = 'block';
+                    } else {
+                        alert('이미지 업로드에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error uploading image:', error);
+                });
+            }
         });
     </script>
 </body>
