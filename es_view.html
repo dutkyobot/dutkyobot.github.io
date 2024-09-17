@@ -1,3 +1,157 @@
-<script
-  fetch("https://getentrystory.ver" + String.fromCharCode(114) + "cel.app/").then((r) => r.json()).then((d) => { console.log(d.data.discussList.list) })
-</script>
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <link
+            rel="icon"
+            href="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png"
+            type="image/png"
+        />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>두쿄봇</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: "Arial", sans-serif;
+                background-color: #f4f4f9;
+                color: #333;
+                line-height: 1.6;
+            }
+            header {
+                background-color: #007bff;
+                color: white;
+                padding: 20px 0;
+                text-align: center;
+            }
+            nav {
+                background-color: #333;
+                padding: 15px;
+                text-align: center;
+            }
+            nav a {
+                color: white;
+                text-decoration: none;
+                margin: 0 15px;
+                padding: 10px;
+                font-weight: bold;
+                border-radius: 4px;
+            }
+            nav a:hover {
+                background-color: #575757;
+            }
+            main {
+                max-width: 1000px;
+                margin: 40px auto;
+                padding: 20px;
+                background-color: white;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+            main h2 {
+                margin-bottom: 20px;
+            }
+            footer {
+                background-color: #333;
+                color: white;
+                text-align: center;
+                padding: 10px 0;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+            .text {
+                background-color: #333;
+                color: #fff;
+                margin: 25px;
+                padding: 25px;
+                border-radius: 10px;
+            }
+            .user {
+                width: 150px;
+                object-fit: cover;
+                height: 150px;
+                border-radius: 50%;
+                background-color: #fff;
+            }
+            .goToEntry {
+                color: #8cf;
+            }
+            .info {
+                display: flex;
+                align-items: center;
+            }
+            .realInfo {
+                margin-left: 15px;
+            }
+            .content {
+                margin-top: 15px;
+                border: 1px solid #555;
+                padding: 10px;
+                border-radius: 15px;
+            }
+            .nickname {
+                font-size: 1.3em;
+                font-weight: 600;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="https://dutkyobot.github.io">홈</a>
+            <a href="https://dutkyobot.github.io/img">이미지 업로드</a>
+            <a href="https://dutkyobot.github.io">3</a>
+            <a href="https://dutkyobot.github.io">4</a>
+        </nav>
+
+        <!-- 메인 콘텐츠 -->
+        <main>
+            <h2>엔트리 이야기</h2>
+            <p>코드 제작 : 파이어런</p>
+            <div id="text1" class="text"><progress></progress></div>
+            <div id="text2" class="text"><progress></progress></div>
+            <div id="text3" class="text"><progress></progress></div>
+            <div id="text4" class="text"><progress></progress></div>
+            <div id="text5" class="text"><progress></progress></div>
+            <div id="text6" class="text"><progress></progress></div>
+            <div id="text7" class="text"><progress></progress></div>
+            <div id="text8" class="text"><progress></progress></div>
+            <div id="text9" class="text"><progress></progress></div>
+            <div id="text10" class="text"><progress></progress></div>
+        </main>
+        <script>
+            fetch("https://getentrystory.vercel.app/")
+                .then((res) => res.json())
+                .then((req) => {
+                    let number = 1;
+                    req.forEach((text) => {
+                        document.querySelector(
+                            "#text" + number
+                        ).innerHTML = `<div class="info"><img class="user" src="https://playentry.org/uploads/${text.user.profileImage.filename.slice(
+                            0,
+                            2
+                        )}/${text.user.profileImage.filename.slice(2, 4)}/${
+                            text.user.profileImage.filename
+                        }.${text.user.profileImage.imageType}"></img>
+                        <div class="realInfo">
+                            <div class="nickname">${text.user.nickname}</div>
+                            <div>댓글 : ${text.commentsLength}</div>
+                            <div>좋아요 : ${text.likesLength}</div>
+                            <div>${new Date(text.created).toLocaleString(
+                                "ko-kR"
+                            )}</div>
+                            <a class="goToEntry" href="https://playentry.org/community/entrystory/${
+                                text.id
+                            }">여기를 눌러서 글 바로가기</a>
+                            </div>
+                            </div>
+                            <div class="content">${text.content}</div>`;
+                        number++;
+                    });
+                });
+        </script>
+    </body>
+</html>
