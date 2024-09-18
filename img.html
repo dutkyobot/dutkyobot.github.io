@@ -77,7 +77,7 @@
         <a href="https://dutkyobot.github.io/">7</a>
     </nav>
 
-<main>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>이미지 호스팅 사이트</title>
@@ -132,6 +132,20 @@
             max-width: 100%;
             max-height: 400px;
         }
+        .upload-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -147,6 +161,8 @@
             <img id="previewImage" alt="이미지 미리보기">
         </div>
 
+        <button id="uploadBtn" class="upload-btn" disabled>이미지 업로드</button>
+
         <div class="uploaded-image">
             <h3>업로드된 이미지:</h3>
             <img id="uploadedImage" alt="업로드된 이미지">
@@ -157,6 +173,8 @@
         const imageInput = document.getElementById('imageInput');
         const previewImage = document.getElementById('previewImage');
         const uploadedImage = document.getElementById('uploadedImage');
+        const uploadBtn = document.getElementById('uploadBtn');
+        let selectedFile = null;
 
         imageInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -170,10 +188,20 @@
                 }
                 reader.readAsDataURL(file);
 
-                // 서버로 파일 업로드
-                const formData = new FormData();
-                formData.append('image', file);
+                // 파일 저장
+                selectedFile = file;
 
+                // 업로드 버튼 활성화
+                uploadBtn.disabled = false;
+            }
+        });
+
+        uploadBtn.addEventListener('click', function() {
+            if (selectedFile) {
+                const formData = new FormData();
+                formData.append('image', selectedFile);
+
+                // 서버로 파일 업로드
                 fetch('http://localhost:3000/upload', {
                     method: 'POST',
                     body: formData
@@ -194,7 +222,8 @@
             }
         });
     </script>
-</main>
+</body>
+</html>
 </body>
     <script type="module">
   // Import the functions you need from the SDKs you need
