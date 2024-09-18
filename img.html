@@ -84,12 +84,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Firebase 이미지 업로드</title>
     <style>
-        /* 스타일 설정은 이전 코드와 동일 */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .image-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .image-upload input[type="file"] {
+            display: none;
+        }
+
+        .image-upload label {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .image-upload label:hover {
+            background-color: #0056b3;
+        }
+
+        .image-preview img {
+            display: none;
+            width: 100%;
+            max-height: 300px;
+            margin-top: 15px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-btn {
+            padding: 10px 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .upload-btn:hover {
+            background-color: #218838;
+        }
+
+        .upload-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .uploaded-image {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .uploaded-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-message {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Firebase 이미지 호스팅</h1>
+        <h1>이미지 업로드</h1>
 
         <div class="image-upload">
             <input type="file" id="imageInput" accept="image/*">
@@ -102,10 +201,12 @@
 
         <button id="uploadBtn" class="upload-btn" disabled>이미지 업로드</button>
 
-        <div class="uploaded-image">
+        <div class="uploaded-image" id="uploadedImageContainer">
             <h3>업로드된 이미지:</h3>
             <img id="uploadedImage" alt="업로드된 이미지">
         </div>
+
+        <div class="status-message" id="statusMessage"></div>
     </div>
 
     <!-- Firebase SDK 추가 -->
@@ -130,10 +231,13 @@
 
         const imageInput = document.getElementById('imageInput');
         const previewImage = document.getElementById('previewImage');
+        const uploadedImageContainer = document.getElementById('uploadedImageContainer');
         const uploadedImage = document.getElementById('uploadedImage');
         const uploadBtn = document.getElementById('uploadBtn');
+        const statusMessage = document.getElementById('statusMessage');
         let selectedFile = null;
 
+        // 파일 선택 시 이미지 미리보기 표시
         imageInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
 
@@ -149,23 +253,26 @@
             }
         });
 
+        // 업로드 버튼 클릭 시 파일 업로드 처리
         uploadBtn.addEventListener('click', function() {
             if (selectedFile) {
+                statusMessage.innerHTML = "업로드 중...";
                 const storageRef = firebase.storage().ref();
                 const uploadTask = storageRef.child(`images/${selectedFile.name}`).put(selectedFile);
 
                 uploadTask.on('state_changed', 
                     function(snapshot) {
-                        // 진행 상황 업데이트 (선택사항)
+                        // 업로드 진행 상태 업데이트 (필요시 추가)
                     }, 
                     function(error) {
                         console.error('Upload failed:', error);
+                        statusMessage.innerHTML = "업로드 실패";
                     }, 
                     function() {
-                        // 업로드 완료 후 URL 가져오기
                         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                             uploadedImage.src = downloadURL;
-                            uploadedImage.style.display = 'block';
+                            uploadedImageContainer.style.display = 'block';
+                            statusMessage.innerHTML = "업로드 완료!";
                         });
                     }
                 );
@@ -174,4 +281,3 @@
     </script>
 </body>
 </html>
-
