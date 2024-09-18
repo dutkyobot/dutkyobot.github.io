@@ -77,105 +77,20 @@
         <a href="https://dutkyobot.github.io/">7</a>
     </nav>
 
+<!DOCTYPE html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이미지 호스팅 사이트</title>
+    <title>Firebase 이미지 업로드</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        .container {
-            width: 80%;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .image-upload {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .image-upload input[type="file"] {
-            display: none;
-        }
-        .image-upload label {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .image-preview {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .image-preview img {
-            max-width: 100%;
-            max-height: 300px;
-            display: none;
-        }
-        .uploaded-image {
-            text-align: center;
-            margin-top: 40px;
-        }
-        .uploaded-image img {
-            max-width: 100%;
-            max-height: 400px;
-        }
-        .upload-btn {
-            display: block;
-            margin: 0 auto;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .upload-btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
+        /* 스타일 설정은 이전 코드와 동일 */
     </style>
 </head>
 <body>
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyCbttp9-1F7eZH_dKtwzan342mQJ6-_VKY",
-    authDomain: "dutkyobot-a4e39.firebaseapp.com",
-    projectId: "dutkyobot-a4e39",
-    storageBucket: "dutkyobot-a4e39.appspot.com",
-    messagingSenderId: "676690856261",
-    appId: "1:676690856261:web:9b462f13e1547b9bc5562c",
-    measurementId: "G-91PCGWEWJV"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
-    
     <div class="container">
-        <h1>이미지 호스팅 사이트</h1>
-        
+        <h1>Firebase 이미지 호스팅</h1>
+
         <div class="image-upload">
             <input type="file" id="imageInput" accept="image/*">
             <label for="imageInput">이미지 선택</label>
@@ -193,7 +108,25 @@
         </div>
     </div>
 
+    <!-- Firebase SDK 추가 -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+
     <script>
+        // Firebase 설정 및 초기화
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Firebase 초기화
+        const app = firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
+
         const imageInput = document.getElementById('imageInput');
         const previewImage = document.getElementById('previewImage');
         const uploadedImage = document.getElementById('uploadedImage');
@@ -204,48 +137,40 @@
             const file = event.target.files[0];
 
             if (file) {
-                // 미리보기 이미지 표시
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     previewImage.src = e.target.result;
                     previewImage.style.display = 'block';
-                }
+                };
                 reader.readAsDataURL(file);
-
-                // 파일 저장
                 selectedFile = file;
-
-                // 업로드 버튼 활성화
                 uploadBtn.disabled = false;
             }
         });
 
         uploadBtn.addEventListener('click', function() {
             if (selectedFile) {
-                const formData = new FormData();
-                formData.append('image', selectedFile);
+                const storageRef = firebase.storage().ref();
+                const uploadTask = storageRef.child(`images/${selectedFile.name}`).put(selectedFile);
 
-                // 서버로 파일 업로드
-                fetch('http://localhost:3000/upload', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.url) {
-                        // 업로드된 이미지 URL 표시
-                        uploadedImage.src = data.url;
-                        uploadedImage.style.display = 'block';
-                    } else {
-                        alert('이미지 업로드에 실패했습니다.');
+                uploadTask.on('state_changed', 
+                    function(snapshot) {
+                        // 진행 상황 업데이트 (선택사항)
+                    }, 
+                    function(error) {
+                        console.error('Upload failed:', error);
+                    }, 
+                    function() {
+                        // 업로드 완료 후 URL 가져오기
+                        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                            uploadedImage.src = downloadURL;
+                            uploadedImage.style.display = 'block';
+                        });
                     }
-                })
-                .catch(error => {
-                    console.error('Error uploading image:', error);
-                });
+                );
             }
         });
     </script>
 </body>
 </html>
-</html>
+
