@@ -249,7 +249,7 @@
                 };
                 reader.readAsDataURL(file);
                 selectedFile = file;
-                uploadBtn.disabled = false;
+                uploadBtn.disabled = false; // 파일 선택 후 버튼 활성화
             }
         });
 
@@ -276,8 +276,11 @@
                         });
                     }
                 );
+            } else {
+                statusMessage.innerHTML = "파일이 선택되지 않았습니다."; // 오류 메시지 추가
             }
         });
     </script>
 </body>
 </html>
+
