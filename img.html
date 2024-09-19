@@ -210,7 +210,7 @@
 
     <!-- Firebase SDK 추가 -->
     <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js"></script>
 
     <script>
         // Firebase 설정 및 초기화
@@ -225,7 +225,7 @@
 
         // Firebase 초기화
         const app = firebase.initializeApp(firebaseConfig);
-        const storage = firebase.storage();
+        const analytics = getAnalytics(app);
 
         const imageInput = document.getElementById('imageInput');
         const previewImage = document.getElementById('previewImage');
