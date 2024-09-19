@@ -77,8 +77,11 @@
                 border-radius: 50%;
                 background-color: #fff;
             }
-            .goToEntry {
+            .goToEntry,
+            .LikeUser {
                 color: #8cf;
+                text-decoration: none;
+                cursor: pointer;
             }
             .info {
                 display: flex;
@@ -92,31 +95,42 @@
                 border: 1px solid #555;
                 padding: 10px;
                 border-radius: 15px;
+                word-wrap: break-word;
             }
             .nickname {
                 font-size: 1.3em;
                 font-weight: 600;
+            }
+            h1 {
+                margin-left: 25px;
+            }
+            details {
+                display: inline;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+            details[open] {
+                display: block !important;
             }
         </style>
     </head>
     <body>
         <nav>
             <a href="https://dutkyobot.github.io">홈</a>
-        <a href="https://dutkyobot.github.io/img">이미지 업로드</a>
-        <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
-        <a href="https://dutkyobot.github.io/">1</a>
-        <a href="https://dutkyobot.github.io/">2</a>
-        <a href="https://dutkyobot.github.io/">3</a>
-        <a href="https://dutkyobot.github.io/">4</a>
-        <a href="https://dutkyobot.github.io/">5</a>
-        <a href="https://dutkyobot.github.io/">6</a>
-        <a href="https://dutkyobot.github.io/">7</a>
+            <a href="https://dutkyobot.github.io/img">이미지 업로드</a>
+            <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
+            <a href="https://dutkyobot.github.io/">1</a>
+            <a href="https://dutkyobot.github.io/">2</a>
+            <a href="https://dutkyobot.github.io/">3</a>
+            <a href="https://dutkyobot.github.io/">4</a>
+            <a href="https://dutkyobot.github.io/">5</a>
+            <a href="https://dutkyobot.github.io/">6</a>
+            <a href="https://dutkyobot.github.io/">7</a>
         </nav>
 
         <!-- 메인 콘텐츠 -->
         <main>
-            <h2>엔트리 이야기</h2>
-            <p>코드 제작 : 파이어런</p>
+            <h1>엔트리 이야기</h1>
             <div id="text1" class="text"><progress></progress></div>
             <div id="text2" class="text"><progress></progress></div>
             <div id="text3" class="text"><progress></progress></div>
@@ -129,23 +143,58 @@
             <div id="text10" class="text"><progress></progress></div>
         </main>
         <script>
+            function getLikeUser(target, yoso) {
+                document.querySelector(`#${yoso}`).removeAttribute("href");
+                fetch(`https://getentrystory.vercel.app/like?${target}`)
+                    .then((res) => res.json())
+                    .then((req) => {
+                        document.querySelector(`#${yoso}`).innerHTML = "";
+                        req.forEach((i) => {
+                            document.querySelector(
+                                `#${yoso}`
+                            ).innerHTML += `${i.user.nickname}(${i.user.username})님,  `;
+                        });
+                        document.querySelector(`#${yoso}`).innerHTML = document
+                            .querySelector(`#${yoso}`)
+                            .innerHTML.slice(0, -3);
+                        document
+                            .querySelector(`#${yoso}`)
+                            .removeAttribute("class");
+                        document.querySelector(`#${yoso}`).outerHTML = document
+                            .querySelector(`#${yoso}`)
+                            .outerHTML.replace(
+                                `<a id="${yoso}">`,
+                                `<details id="${yoso}"><summary>(누른 유저 보기)</summary>`
+                            )
+                            .replace("</a>", "</details>");
+                    });
+            }
+            let userPro = "";
             fetch("https://getentrystory.vercel.app/")
                 .then((res) => res.json())
                 .then((req) => {
                     let number = 1;
                     req.forEach((text) => {
-                        document.querySelector(
-                            "#text" + number
-                        ).innerHTML = `<div class="info"><img class="user" src="https://playentry.org/uploads/${text.user.profileImage.filename.slice(
-                            0,
-                            2
-                        )}/${text.user.profileImage.filename.slice(2, 4)}/${
-                            text.user.profileImage.filename
-                        }.${text.user.profileImage.imageType}"></img>
-                        <div class="realInfo">
+                        if (text.user.profileImage != null) {
+                            userPro = `<div class="info"><img class="user" src="https://playentry.org/uploads/${text.user.profileImage.filename.slice(
+                                0,
+                                2
+                            )}/${text.user.profileImage.filename.slice(2, 4)}/${
+                                text.user.profileImage.filename
+                            }.${text.user.profileImage.imageType}"></img>`;
+                        } else {
+                            userPro = `<div class="info"><img class="user" src="https://playentry.org/img/DefaultCardUserThmb.svg"></img>`;
+                        }
+                        document.querySelector("#text" + number).innerHTML =
+                            userPro +
+                            `<div class="realInfo">
                             <div class="nickname">${text.user.nickname}</div>
                             <div>댓글 : ${text.commentsLength}</div>
-                            <div>좋아요 : ${text.likesLength}</div>
+                            <div>좋아요 : ${
+                                text.likesLength
+                            } <a id="Like${number}" class="LikeUser" href="javascript:getLikeUser('${
+                                text.id
+                            }', 'Like${number}')">(누른 유저 보기)</a></div>
                             <div>${new Date(text.created).toLocaleString(
                                 "ko-kR"
                             )}</div>
@@ -154,7 +203,10 @@
                             }">여기를 눌러서 글 바로가기</a>
                             </div>
                             </div>
-                            <div class="content">${text.content}</div>`;
+                            <div class="content">${text.content.replaceAll(
+                                "<",
+                                "&lt;"
+                            )}</div>`;
                         number++;
                     });
                 });
