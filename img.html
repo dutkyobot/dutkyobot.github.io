@@ -212,28 +212,26 @@
     <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js"></script>
 
-    <script>
-        // Firebase 설정 및 초기화
+          <script type="module">
+        <!-- Firebase SDK 추가 -->
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+
+      // Firebase 설정 및 초기화
         const firebaseConfig = {
-            apiKey: "AIzaSyCbttp9-1F7eZH_dKtwzan342mQJ6-_VKY",
-            authDomain: "dutkyobot-a4e39.firebaseapp.com",
-            projectId: "dutkyobot-a4e39",
-            storageBucket: "dutkyobot-a4e39.appspot.com",
-            messagingSenderId: "676690856261",
-            appId: "1:676690856261:web:9b462f13e1547b9bc5562c"
+          apiKey: "AIzaSyCbttp9-1F7eZH_dKtwzan342mQJ6-_VKY",
+          authDomain: "dutkyobot-a4e39.firebaseapp.com",
+          projectId: "dutkyobot-a4e39",
+          storageBucket: "dutkyobot-a4e39.appspot.com",
+          messagingSenderId: "676690856261",
+          appId: "1:676690856261:web:9b462f13e1547b9bc5562c",
+          measurementId: "G-91PCGWEWJV"
         };
 
         // Firebase 초기화
-        const app = firebase.initializeApp(firebaseConfig);
+        const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-
-        const imageInput = document.getElementById('imageInput');
-        const previewImage = document.getElementById('previewImage');
-        const uploadedImageContainer = document.getElementById('uploadedImageContainer');
-        const uploadedImage = document.getElementById('uploadedImage');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const statusMessage = document.getElementById('statusMessage');
-        let selectedFile = null;
+        .
 
         // 파일 선택 시 이미지 미리보기 표시
         imageInput.addEventListener('change', function(event) {
