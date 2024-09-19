@@ -211,19 +211,18 @@
     </div>
 
     <!-- Firebase SDK 추가 -->
-    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
 
     <script>
         // Firebase 설정 및 초기화
         const firebaseConfig = {
-            apiKey: "AIzaSyCbttp9-1F7eZH_dKtwzan342mQJ6-_VKY",
-            authDomain: "dutkyobot-a4e39.firebaseapp.com",
-            projectId: "dutkyobot-a4e39",
-            storageBucket: "dutkyobot-a4e39.appspot.com",
-            messagingSenderId: "676690856261",
-            appId: "1:676690856261:web:9b462f13e1547b9bc5562c",
-            measurementId: "G-91PCGWEWJV"
+            apiKey: "YOUR_API_KEY", // Firebase 콘솔에서 받은 API 키로 대체
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         // Firebase 초기화
@@ -263,10 +262,9 @@
 
                 uploadTask.on('state_changed', 
                     function(snapshot) {
-                        // 업로드 진행 상태 업데이트 (필요시 추가)
+                        // 업로드 진행 상태 업데이트
                     }, 
                     function(error) {
-                        console.error('Upload failed:', error);
                         statusMessage.innerHTML = "업로드 실패";
                     }, 
                     function() {
@@ -278,10 +276,9 @@
                     }
                 );
             } else {
-                statusMessage.innerHTML = "파일이 선택되지 않았습니다."; // 오류 메시지 추가
+                statusMessage.innerHTML = "파일이 선택되지 않았습니다.";
             }
         });
     </script>
 </body>
 </html>
-
