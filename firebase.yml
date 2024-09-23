@@ -1,0 +1,4 @@
+    - run: npm install -g firebase-tools
+    - run: npm firebase login
+    - run: npm firebase init
+    - run: npm firebase deploy
