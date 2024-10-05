@@ -1,0 +1,27 @@
+name: Generate Redirect Pages
+
+on:
+  push:
+    paths:
+      - "urls.json"  # urls.json 파일이 수정될 때마다 실행
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Generate redirect HTML files
+      run: |
+        mkdir -p redirects
+        node generateRedirects.js
+
+    - name: Commit redirect files
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add redirects/
+        git commit -m "Update redirects"
+        git push
