@@ -78,64 +78,59 @@
         <a href="https://dutkyobot.github.io/">7</a>
     </nav>
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>URL Shortener</title>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-functions.js"></script>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple URL Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-  <h1>Firebase URL Shortener</h1>
-  
-  <div class="container">
-    <input type="text" id="urlInput" placeholder="Enter your URL" />
-    <button id="shortenBtn">Shorten URL</button>
-    <p id="shortUrl"></p>
-  </div>
+    <div class="container">
+        <h1>URL Shortener</h1>
+        <input type="text" id="urlInput" placeholder="Enter URL to shorten">
+        <br>
+        <button onclick="shortenUrl()">Shorten URL</button>
+        <div class="result" id="result"></div>
+    </div>
 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    <script>
+        const baseUrl = "https://dutkyobot.github.𝗂𝗈/";
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyCbttp9-1F7eZH_dKtwzan342mQJ6-_VKY",
-    authDomain: "dutkyobot-a4e39.firebaseapp.com",
-    projectId: "dutkyobot-a4e39",
-    storageBucket: "dutkyobot-a4e39.appspot.com",
-    messagingSenderId: "676690856261",
-    appId: "1:676690856261:web:9b462f13e1547b9bc5562c"
-  };
+        function shortenUrl() {
+            const originalUrl = document.getElementById('urlInput').value;
+            const shortUrl = baseUrl + Math.random().toString(36).substring(2, 8);
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const functions = getFunctions(app);
-
-    // Shorten URL
-    const shortenBtn = document.getElementById("shortenBtn");
-    shortenBtn.addEventListener("click", async () => {
-      const url = document.getElementById("urlInput").value;
-      const shortenUrlFunction = httpsCallable(functions, 'shortenUrl');
-
-      try {
-        const result = await shortenUrlFunction({ originalUrl: url });
-        const shortUrl = result.data.shortUrl;
-        document.getElementById("shortUrl").innerText = `Shortened URL: ${shortUrl}`;
-      } catch (error) {
-        console.error("Error shortening URL:", error);
-      }
-    });
-  </script>
+            document.getElementById('result').innerHTML = `
+                Original URL: <a href="${originalUrl}" target="_blank">${originalUrl}</a><br>
+                Short URL: <a href="${shortUrl}" target="_blank">${shortUrl}</a>
+            `;
+        }
+    </script>
 </body>
-</script>
 </html>
