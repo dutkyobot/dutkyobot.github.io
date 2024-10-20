@@ -83,54 +83,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple URL Shortener</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+    <title>URL Shortener</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script>
+        // Firebase 초기화 설정
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        // Firebase 초기화
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // 단축 URL 생성
+        async function shortenUrl() {
+            const originalUrl = document.getElementById('url-input').value;
+            const shortUrl = generateShortUrl();  // 고유한 단축 URL 코드 생성
+
+            // Firestore에 단축 URL과 원본 URL 저장
+            await db.collection('urls').doc(shortUrl).set({
+                originalUrl: originalUrl
+            });
+
+            // 단축 URL 출력
+            const resultElement = document.getElementById('result');
+            resultElement.innerHTML = `Your shortened URL: <a href="/${shortUrl}" target="_blank">https://yourdomain.com/${shortUrl}</a>`;
         }
-        .container {
-            text-align: center;
+
+        // 고유한 단축 URL 생성 (임의의 6자리 문자열)
+        function generateShortUrl() {
+            return Math.random().toString(36).substring(2, 8);
         }
-        input[type="text"] {
-            width: 300px;
-            padding: 10px;
-            margin-bottom: 10px;
+
+        // 리디렉션 처리
+        async function handleRedirect() {
+            const path = window.location.pathname.substring(1);  // URL 경로에서 단축 코드 추출
+            if (path) {
+                const doc = await db.collection('urls').doc(path).get();
+                if (doc.exists) {
+                    const originalUrl = doc.data().originalUrl;
+                    window.location.href = originalUrl;  // 원본 URL로 리디렉션
+                } else {
+                    document.body.innerHTML = 'URL not found';
+                }
+            }
         }
-        button {
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-        .result {
-            margin-top: 20px;
-        }
-    </style>
+
+        // 페이지가 로드될 때 리디렉션 처리
+        window.onload = handleRedirect;
+    </script>
 </head>
 <body>
-    <div class="container">
-        <h1>URL Shortener</h1>
-        <input type="text" id="urlInput" placeholder="Enter URL to shorten">
-        <br>
-        <button onclick="shortenUrl()">Shorten URL</button>
-        <div class="result" id="result"></div>
-    </div>
-
-    <script>
-        const baseUrl = "https://dutkyobot.github.𝗂𝗈/";
-
-        function shortenUrl() {
-            const originalUrl = document.getElementById('urlInput').value;
-            const shortUrl = baseUrl + Math.random().toString(36).substring(2, 8);
-
-            document.getElementById('result').innerHTML = `
-                Original URL: <a href="${originalUrl}" target="_blank">${originalUrl}</a><br>
-                Short URL: <a href="${shortUrl}" target="_blank">${shortUrl}</a>
-            `;
-        }
-    </script>
+    <h1>URL Shortener</h1>
+    <input type="text" id="url-input" placeholder="Enter your URL">
+    <button onclick="shortenUrl()">Shorten URL</button>
+    <div id="result"></div>
 </body>
 </html>
