@@ -83,40 +83,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML 실행기</title>
     <style>
-        body {
+        #html-executor-container {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
+            background-color: #f5f5f5;
         }
-        textarea {
+        #html-executor-container h1 {
+            color: #333;
+        }
+        #html-executor-container label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        #html-executor-container textarea {
             width: 90%;
             height: 150px;
             margin-top: 10px;
+            resize: vertical;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-family: monospace;
         }
-        iframe {
+        #html-executor-container button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #333;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #html-executor-container button:hover {
+            background-color: #555;
+        }
+        #output {
             width: 100%;
             height: 300px;
             border: 1px solid #ddd;
             margin-top: 20px;
+            background-color: #fff;
         }
     </style>
 </head>
 <body>
-    <h1>HTML 실행기</h1>
-    <p>HTML, CSS, JavaScript 코드를 입력하고 실행해보세요!</p>
-    
-    <label for="html">HTML 코드</label><br>
-    <textarea id="html" placeholder="HTML 코드를 여기에 입력하세요..."></textarea><br>
+    <div id="html-executor-container">
+        <h1>HTML 실행기</h1>
+        <p>HTML, CSS, JavaScript 코드를 입력하고 실행해보세요!</p>
+        
+        <label for="html">HTML 코드</label>
+        <textarea id="html" placeholder="HTML 코드를 여기에 입력하세요..."></textarea>
 
-    <label for="css">CSS 코드</label><br>
-    <textarea id="css" placeholder="CSS 코드를 여기에 입력하세요..."></textarea><br>
+        <label for="css">CSS 코드</label>
+        <textarea id="css" placeholder="CSS 코드를 여기에 입력하세요..."></textarea>
 
-    <label for="js">JavaScript 코드</label><br>
-    <textarea id="js" placeholder="JavaScript 코드를 여기에 입력하세요..."></textarea><br>
+        <label for="js">JavaScript 코드</label>
+        <textarea id="js" placeholder="JavaScript 코드를 여기에 입력하세요..."></textarea>
 
-    <button onclick="runCode()">코드 실행</button>
+        <button onclick="runCode()">코드 실행</button>
 
-    <iframe id="output"></iframe>
+        <iframe id="output"></iframe>
+    </div>
 
     <script>
         function runCode() {
@@ -140,6 +169,7 @@
     </script>
 </body>
 </html>
+
     
     
     <main>
