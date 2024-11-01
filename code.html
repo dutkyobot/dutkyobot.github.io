@@ -98,7 +98,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
-            background-color: #f5f5f5;
+            background-color: #f4f4f9;
         }
         #html-executor-container h1 {
             color: #333;
@@ -117,8 +117,11 @@
             padding: 10px;
             font-family: monospace;
         }
-        #html-executor-container button {
+        .button-container {
             margin-top: 15px;
+            text-align: center;
+        }
+        #html-executor-container button {
             padding: 10px 20px;
             font-size: 16px;
             color: #fff;
@@ -153,7 +156,9 @@
         <label for="js">JavaScript 코드</label>
         <textarea id="js" placeholder="JavaScript 코드를 여기에 입력하세요..."></textarea>
 
-        <button onclick="runCode()">코드 실행</button>
+        <div class="button-container">
+            <button onclick="runCode()">코드 실행</button>
+        </div>
 
         <iframe id="output"></iframe>
     </div>
