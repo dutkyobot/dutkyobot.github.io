@@ -78,80 +78,68 @@
     <!-- 메인 콘텐츠 -->
     <!DOCTYPE html>
 <html lang="ko">
-<head><link rel="icon" href="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png" type="image/png"></head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>두쿄봇</title>
+    <title>HTML 실행기</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            line-height: 1.6;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px 0;
+            font-family: Arial, sans-serif;
             text-align: center;
-        }
-        nav {
-            background-color: #333;
-            padding: 15px;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            padding: 10px;
-            font-weight: bold;
-            border-radius: 4px;
-        }
-        nav a:hover {
-            background-color: #575757;
-        }
-        main {
-            max-width: 1000px;
-            margin: 40px auto;
             padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
         }
-        main h2 {
-            margin-bottom: 20px;
+        textarea {
+            width: 90%;
+            height: 150px;
+            margin-top: 10px;
         }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
+        iframe {
             width: 100%;
+            height: 300px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
+    <h1>HTML 실행기</h1>
+    <p>HTML, CSS, JavaScript 코드를 입력하고 실행해보세요!</p>
     
-    <nav>
-        <a href="https://dutkyobot.github.io">홈</a>
-        <a href="https://dutkyobot.github.io/code">코드 실행기</a>
-        <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
-        <a href="https://dutkyobot.github.io/">1</a>
-        <a href="https://dutkyobot.github.io/">2</a>
-        <a href="https://dutkyobot.github.io/">3</a>
-        <a href="https://dutkyobot.github.io/">4</a>
-        <a href="https://dutkyobot.github.io/">5</a>
-        <a href="https://dutkyobot.github.io/">6</a>
-        <a href="https://dutkyobot.github.io/">7</a>
-    </nav>
+    <label for="html">HTML 코드</label><br>
+    <textarea id="html" placeholder="HTML 코드를 여기에 입력하세요..."></textarea><br>
+
+    <label for="css">CSS 코드</label><br>
+    <textarea id="css" placeholder="CSS 코드를 여기에 입력하세요..."></textarea><br>
+
+    <label for="js">JavaScript 코드</label><br>
+    <textarea id="js" placeholder="JavaScript 코드를 여기에 입력하세요..."></textarea><br>
+
+    <button onclick="runCode()">코드 실행</button>
+
+    <iframe id="output"></iframe>
+
+    <script>
+        function runCode() {
+            const html = document.getElementById("html").value;
+            const css = document.getElementById("css").value;
+            const js = document.getElementById("js").value;
+            
+            const output = document.getElementById("output");
+            const fullCode = `
+                <html>
+                <head><style>${css}</style></head>
+                <body>
+                ${html}
+                <script>${js}<\/script>
+                </body>
+                </html>
+            `;
+            
+            output.srcdoc = fullCode;
+        }
+    </script>
+</body>
+</html>
     
     
     <main>
