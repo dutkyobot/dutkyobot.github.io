@@ -1,186 +1,252 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head><link rel="icon" href="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png" type="image/png"></head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>두쿄봇 - 코드 실행기</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            line-height: 1.6;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        nav {
-            background-color: #333;
-            padding: 15px;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            padding: 10px;
-            font-weight: bold;
-            border-radius: 4px;
-        }
-        nav a:hover {
-            background-color: #575757;
-        }
-        main {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        main h2 {
-            margin-bottom: 20px;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-    
-    <nav>
-        <a href="https://dutkyobot.github.io">홈</a>
-        <a href="https://dutkyobot.github.io/code">코드 실행기</a>
-        <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
-        <a href="https://dutkyobot.github.io/">1</a>
-        <a href="https://dutkyobot.github.io/">2</a>
-        <a href="https://dutkyobot.github.io/">3</a>
-        <a href="https://dutkyobot.github.io/">4</a>
-        <a href="https://dutkyobot.github.io/">5</a>
-        <a href="https://dutkyobot.github.io/">6</a>
-        <a href="https://dutkyobot.github.io/">7</a>
-    </nav>
-
-    <!-- 메인 콘텐츠 -->
-    <main>
-        <h2>안내사항</h2>
-        <p>코드 실행기는 현재 테스트 단계입니다. 유의하시기 바랍니다.</p>
-   </main>
-
-</body>
-</html>
-    
-<!DOCTYPE html>
-<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>코드 실행기</title>
-    <style>
-        #html-executor-container {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            background-color: #f4f4f9;
-        }
-        #html-executor-container h1 {
-            color: #333;
-        }
-        #html-executor-container label {
-            display: block;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-        #html-executor-container textarea {
-            width: 1000px;
-            height: 150px;
-            margin-top: 10px;
-            resize: vertical;
-            border: 1px solid #ccc;
-            padding: 10px;
-            font-family: monospace;
-            border-radius: 8px;
-        }
-        .button-container {
-            margin-top: 15px;
-            text-align: center;
-        }
-        #html-executor-container button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #333;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        #html-executor-container button:hover {
-            background-color: #555;
-        }
-        #output {
-            width: 1000px; /* 가로 */
-            height: 562.5px; /* 세로 */
-            border: 1px solid #ddd;
-            margin-top: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>두쿄봇 - 코드 실행기</title>
+  <link rel="icon" href="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png" type="image/png">
+  <style>
+    /* 공통 스타일 */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    header {
+      background-color: #6CB4FD;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .logo a {
+      display: flex;
+      align-items: center;
+      color: inherit;
+      text-decoration: none; /* 링크 표시 제거 */
+    }
+    .logo img {
+      height: 35px;
+      margin-right: 0.5rem;
+      border-radius: 5px;
+      border:1.3px solid;
+      border-color:#585858
+    }
+    .logo span {
+      font-size: 1.2rem; /* 기본 글씨 크기 */
+      font-weight: bold;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      background-color: #337AB7;
+      transition: all 0.3s ease;
+    }
+    nav a:hover, nav a:focus {
+      background-color: white;
+      color: #6CB4FD;
+      box-shadow: 0 0 4px #6CB4FD;
+      outline: none;
+    }
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 2rem;
+      min-height: calc(100vh - 140px);
+    }
+    .content-box {
+      background-color: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      max-width: 600px;
+      width: 90%;
+      margin-bottom: 2rem;
+    }
+    footer {
+      background-color: #6CB4FD;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 0.9rem;
+    }
+    #html-executor-container {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    #html-executor-container label {
+      display: block;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    #html-executor-container textarea {
+      width: 100%;
+      height: 150px;
+      margin-top: 10px;
+      resize: vertical;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-family: monospace;
+      border-radius: 8px;
+    }
+    .button-container {
+      margin-top: 15px;
+      text-align: center;
+    }
+    #html-executor-container button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #333;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    #html-executor-container button:hover {
+      background-color: #555;
+    }
+    #output {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 1px solid #ddd;
+      margin-top: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+    }
+    .resize-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .resize-buttons button {
+      padding: 8px 16px;
+      font-size: 14px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .resize-buttons button:hover {
+      background-color: #0056b3;
+    }
+  
+    /* PC 전용 스타일 */
+    @media screen and (min-width: 768px) {
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+      }
+      .logo {
+        margin-bottom: 0;
+      }
+      .logo span {
+        font-size: 1.2rem;
+      }
+      nav {
+        justify-content: flex-end;
+        gap: 0;
+      }
+      nav a {
+        margin-left: 1rem;
+        background-color: transparent;
+      }
+    }
+  </style>
 </head>
 <body>
+  
+<header>
+  <div class="logo">
+    <a href="https://dutkyobot.github.io">
+      <img src="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png" alt="두쿄봇 로고">
+      <span>두쿄봇</span>
+    </a>
+  </div>
+  <nav>
+    <a href="https://dutkyobot.github.io/code">코드 실행기</a>
+    <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
+    <a href="https://dutkyobot.github.io/">준비중</a>
+    <a href="https://dutkyobot.github.io/">준비중 2</a>
+  </nav>
+</header>
+
+<main>
+  <div class="content-box">
+    <h2>코드 실행기</h2>
+    <p>HTML, CSS, JavaScript 코드를 입력하고 실행해보세요!</p>
     <div id="html-executor-container">
-        <h1>코드 실행기</h1>
-        <p>HTML, CSS, JavaScript 코드를 입력하고 실행해보세요!</p>
-        
-        <label for="html">HTML 코드</label>
-        <textarea id="html" placeholder="HTML 코드를 여기에 입력하세요..."></textarea>
-
-        <label for="css">CSS 코드</label>
-        <textarea id="css" placeholder="CSS 코드를 여기에 입력하세요..."></textarea>
-
-        <label for="js">JavaScript 코드</label>
-        <textarea id="js" placeholder="JavaScript 코드를 여기에 입력하세요..."></textarea>
-
-        <div class="button-container">
-            <button onclick="runCode()">코드 실행</button>
-        </div>
-
-        <iframe id="output"></iframe>
+      <label for="html">HTML 코드</label>
+      <textarea id="html" placeholder="HTML 코드를 여기에 입력하세요..."></textarea>
+      <label for="css">CSS 코드</label>
+      <textarea id="css" placeholder="CSS 코드를 여기에 입력하세요..."></textarea>
+      <label for="js">JavaScript 코드</label>
+      <textarea id="js" placeholder="JavaScript 코드를 여기에 입력하세요..."></textarea>
+      <div class="button-container">
+        <button onclick="runCode()">코드 실행</button>
+      </div>
+      <iframe id="output"></iframe>
+      <div class="resize-buttons">
+        <button onclick="resizeOutput(1.2)">확대</button>
+        <button onclick="resizeOutput(0.8)">축소</button>
+      </div>
     </div>
+  </div>
+</main>
 
-    <script>
-        function runCode() {
-            const html = document.getElementById("html").value;
-            const css = document.getElementById("css").value;
-            const js = document.getElementById("js").value;
-            
-            const output = document.getElementById("output");
-            const fullCode = `
-                <html>
-                <head><style>${css}</style></head>
-                <body>
-                ${html}
-                <script>${js}<\/script>
-                </body>
-                </html>
-            `;
-            
-            output.srcdoc = fullCode;
-        }
-    </script>
+<footer>
+  <a href="https://github.com/dutkyobot/dutkyobot.github.io"> <img src="C:\Users\a0109\Downloads\html\img\github-mark.svg" width="40px"> </a>
+  <p>&copy; 2024. 두쿄봇. All Rights Reserved.</p>
+</footer>
+
+<script>
+  let scale = 1;
+
+  function runCode() {
+    const html = document.getElementById("html").value;
+    const css = document.getElementById("css").value;
+    const js = document.getElementById("js").value;
+
+    const output = document.getElementById("output");
+    const fullCode = `
+      <html>
+      <head><style>${css}</style></head>
+      <body>
+      ${html}
+      <script>${js}<\/script>
+      </body>
+      </html>
+    `;
+    output.srcdoc = fullCode;
+  }
+
+  function resizeOutput(factor) {
+    scale *= factor;
+    const output = document.getElementById("output");
+    output.style.transform = `scale(${scale})`;
+    output.style.transformOrigin = "top left";
+  }
+</script>
 </body>
 </html>
