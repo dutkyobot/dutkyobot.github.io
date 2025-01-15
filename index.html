@@ -1,146 +1,89 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>두쿄봇</title>
-  <link rel="icon" href="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png" type="image/png">
-  <style>
-    /* 공통 스타일 */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
-    header {
-      background-color: #6CB4FD;
-      color: white;
-      text-align: center;
-      padding: 1rem 0;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
-    .logo a {
-      display: flex;
-      align-items: center;
-      color: inherit;
-      text-decoration: none; /* 링크 표시 제거 */
-    }
-    .logo img {
-      height: 35px;
-      margin-right: 0.5rem;
-      border-radius: 5px;
-      border:1.3px solid;
-      border-color:#585858
-    }
-    .logo span {
-      font-size: 1.2rem; /* 기본 글씨 크기 */
-      font-weight: bold;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      background-color: #337AB7;
-      transition: all 0.3s ease;
-    }
-    nav a:hover, nav a:focus {
-      background-color: white;
-      color: #6CB4FD;
-      box-shadow: 0 0 4px #6CB4FD;
-      outline: none;
-    }
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding-top: 2rem;
-      min-height: calc(100vh - 140px);
-    }
-    .content-box {
-      background-color: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: left;
-      max-width: 600px;
-      width: 90%;
-      margin-bottom: 2rem;
-    }
-    footer {
-      background-color: #6CB4FD;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      font-size: 0.9rem;
-    }
-
-    /* PC 전용 스타일 */
-    @media screen and (min-width: 768px) {
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.5rem 1rem;
-      }
-      .logo {
-        margin-bottom: 0;
-      }
-      .logo span {
-        font-size: 1.2rem;
-      }
-      nav {
-        justify-content: flex-end;
-        gap: 0;
-      }
-      nav a {
-        margin-left: 1rem;
-        background-color: transparent;
-      }
-    }
-  </style>
+<head><link rel="icon" href="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png" type="image/png"></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>두쿄봇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #333;
+            padding: 15px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        nav a:hover {
+            background-color: #575757;
+        }
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        main h2 {
+            margin-bottom: 20px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
+    
+    <nav>
+        <a href="https://dutkyobot.github.io">홈</a>
+        <a href="https://dutkyobot.github.io/code">코드 실행기</a>
+        <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
+        <a href="https://dutkyobot.github.io/">1</a>
+        <a href="https://dutkyobot.github.io/">2</a>
+        <a href="https://dutkyobot.github.io/">3</a>
+        <a href="https://dutkyobot.github.io/">4</a>
+        <a href="https://dutkyobot.github.io/">5</a>
+        <a href="https://dutkyobot.github.io/">6</a>
+        <a href="https://dutkyobot.github.io/">7</a>
+    </nav>
 
-<header>
-  <div class="logo">
-    <a href="https://dutkyobot.github.io">
-      <img src="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png" alt="두쿄봇 로고">
-      <span>두쿄봇</span>
-    </a>
-  </div>
-  <nav>
-    <a href="https://dutkyobot.github.io/code">코드 실행기</a>
-    <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
-    <a href="https://dutkyobot.github.io/">준비중</a>
-    <a href="https://dutkyobot.github.io/">준비중 2</a>
-  </nav>
-</header>
-
-<main>
-  <div class="content-box">
-    <h2>환영합니다! 👋</h2>
-    <p>"두쿄봇" 사이트에 오신것을 환영합니다!</p>
-  </div>
-</main>
-
-<footer>
-  <a href="https://github.com/dutkyobot/dutkyobot.github.io"> <img src="C:\Users\a0109\Downloads\html\img\github-mark.svg" width="40px"> </a>
-  <p>&copy; 2024. 두쿄봇. All Rights Reserved.</p>
-</footer>
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <h2>환영합니다!</h2>
+        <p>"두쿄봇" 사이트에 오신것을 환영합니다!</p>
+        <p>-------------------------------------------------</p>
+        <p>[안내] 사이트를 리뉴얼 할 예정이에요!</p>
+        <p>24년 11월 28일 ~ </p>
+        <p>리뉴얼 될 사이트 미리 보기! https://dutkyobot.github.io/test</p>
+    </main>
 
 </body>
 </html>
