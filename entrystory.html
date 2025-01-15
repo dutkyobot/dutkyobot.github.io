@@ -1,201 +1,218 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>두쿄봇 - 엔트리 이야기</title>
-  <link rel="icon" href="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png" type="image/png">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
-    header {
-      background-color: #6CB4FD;
-      color: white;
-      text-align: center;
-      padding: 1rem 0;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
-    .logo a {
-      display: flex;
-      align-items: center;
-      color: inherit;
-      text-decoration: none; /* 링크 표시 제거 */
-    }
-    .logo img {
-      height: 35px;
-      margin-right: 0.5rem;
-      border-radius: 5px;
-      border:1.3px solid;
-      border-color:#585858
-    }
-    .logo span {
-      font-size: 1.2rem; /* 기본 글씨 크기 */
-      font-weight: bold;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      background-color: #337AB7;
-      transition: all 0.3s ease;
-    }
-    nav a:hover, nav a:focus {
-      background-color: white;
-      color: #6CB4FD;
-      box-shadow: 0 0 4px #6CB4FD;
-      outline: none;
-    }
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding-top: 2rem;
-      min-height: calc(100vh - 140px);
-    }
-    .content-box {
-      background-color: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: left;
-      max-width: 600px;
-      width: 90%;
-      margin-bottom: 2rem;
-    }
-    .text {
-      background-color: #333;
-      color: #fff;
-      margin: 25px;
-      padding: 25px;
-      border-radius: 10px;
-    }
-    footer {
-      background-color: #6CB4FD;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      font-size: 0.9rem;
-    }
+    <head>
+        <link
+            rel="icon"
+            href="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png"
+            type="image/png"
+        />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>두쿄봇 - 엔트리 이야기</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: "Arial", sans-serif;
+                background-color: #f4f4f9;
+                color: #333;
+                line-height: 1.6;
+            }
+            header {
+                background-color: #007bff;
+                color: white;
+                padding: 20px 0;
+                text-align: center;
+            }
+            nav {
+                background-color: #333;
+                padding: 15px;
+                text-align: center;
+            }
+            nav a {
+                color: white;
+                text-decoration: none;
+                margin: 0 15px;
+                padding: 10px;
+                font-weight: bold;
+                border-radius: 4px;
+            }
+            nav a:hover {
+                background-color: #575757;
+            }
+            main {
+                max-width: 1000px;
+                margin: 40px auto;
+                padding: 20px;
+                background-color: white;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+            main h2 {
+                margin-bottom: 20px;
+            }
+            footer {
+                background-color: #333;
+                color: white;
+                text-align: center;
+                padding: 10px 0;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+            .text {
+                background-color: #333;
+                color: #fff;
+                margin: 25px;
+                padding: 25px;
+                border-radius: 10px;
+            }
+            .user {
+                width: 150px;
+                object-fit: cover;
+                height: 150px;
+                border-radius: 50%;
+                background-color: #fff;
+            }
+            .goToEntry,
+            .LikeUser {
+                color: #8cf;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            .info {
+                display: flex;
+                align-items: center;
+            }
+            .realInfo {
+                margin-left: 15px;
+            }
+            .content {
+                margin-top: 15px;
+                border: 1px solid #555;
+                padding: 10px;
+                border-radius: 15px;
+                word-wrap: break-word;
+            }
+            .nickname {
+                font-size: 1.3em;
+                font-weight: 600;
+            }
+            h1 {
+                margin-left: 25px;
+            }
+            details {
+                display: inline;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+            details[open] {
+                display: block !important;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a href="https://dutkyobot.github.io">홈</a>
+            <a href="https://dutkyobot.github.io/code">코드 실행기</a>
+            <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
+            <a href="https://dutkyobot.github.io/">1</a>
+            <a href="https://dutkyobot.github.io/">2</a>
+            <a href="https://dutkyobot.github.io/">3</a>
+            <a href="https://dutkyobot.github.io/">4</a>
+            <a href="https://dutkyobot.github.io/">5</a>
+            <a href="https://dutkyobot.github.io/">6</a>
+            <a href="https://dutkyobot.github.io/">7</a>
+    </nav>
 
-    /* PC 전용 스타일 */
-    @media screen and (min-width: 768px) {
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.5rem 1rem;
-      }
-      .logo {
-        margin-bottom: 0;
-      }
-      .logo span {
-        font-size: 1.2rem;
-      }
-      nav {
-        justify-content: flex-end;
-        gap: 0;
-      }
-      nav a {
-        margin-left: 1rem;
-        background-color: transparent;
-      }
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  <div class="logo">
-    <a href="https://dutkyobot.github.io">
-      <img src="https://playentry.org/uploads/e4/13/e4136c29lxfrk4fc0whv82abeaapi4wq.png" alt="두쿄봇 로고">
-      <span>두쿄봇</span>
-    </a>
-  </div>
-  <nav>
-    <a href="https://dutkyobot.github.io/code">코드 실행기</a>
-    <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
-    <a href="https://dutkyobot.github.io/">준비중</a>
-    <a href="https://dutkyobot.github.io/">준비중 2</a>
-  </nav>
-</header>
-
-<main>
-  <!-- 기존 콘텐츠 이식 -->
-  <div class="content-box">
-    <h2>엔트리 이야기 (작동 안 함)</h2>
-    <p>제작 | 파이어런</p>
-    <div id="text1" class="text"><progress></progress></div>
-    <div id="text2" class="text"><progress></progress></div>
-    <div id="text3" class="text"><progress></progress></div>
-    <div id="text4" class="text"><progress></progress></div>
-    <div id="text5" class="text"><progress></progress></div>
-    <div id="text6" class="text"><progress></progress></div>
-    <div id="text7" class="text"><progress></progress></div>
-    <div id="text8" class="text"><progress></progress></div>
-    <div id="text9" class="text"><progress></progress></div>
-    <div id="text10" class="text"><progress></progress></div>
-  </div>
-</main>
-
-<footer>
-  <a href="https://github.com/dutkyobot/dutkyobot.github.io"> <img src="C:\Users\a0109\Downloads\html\img\github-mark.svg" width="40px"> </a>
-  <p>&copy; 2024. 두쿄봇. All Rights Reserved.</p>
-</footer>
-
-<script>
-  // 기존 스크립트 복사
-  function getLikeUser(target, yoso) {
-    document.querySelector(`#${yoso}`).removeAttribute("href");
-    fetch(`https://getentrystory.vercel.app/like?${target}`)
-      .then((res) => res.json())
-      .then((req) => {
-        document.querySelector(`#${yoso}`).innerHTML = "";
-        req.forEach((i) => {
-          document.querySelector(`#${yoso}`).innerHTML += `${i.user.nickname}(${i.user.username})님,  `;
-        });
-        document.querySelector(`#${yoso}`).innerHTML = document
-          .querySelector(`#${yoso}`)
-          .innerHTML.slice(0, -3);
-        document.querySelector(`#${yoso}`).outerHTML = document
-          .querySelector(`#${yoso}`)
-          .outerHTML.replace(
-            `<a id="${yoso}">`,
-            `<details id="${yoso}"><summary>(누른 유저 보기)</summary>`
-          )
-          .replace("</a>", "</details>");
-      });
-  }
-  fetch("https://getentrystory.vercel.app/")
-    .then((res) => res.json())
-    .then((req) => {
-      let number = 1;
-      req.forEach((text) => {
-        document.querySelector("#text" + number).innerHTML = ` 
-          <div class="nickname">${text.user.nickname}</div>
-          <div>댓글: ${text.commentsLength}</div>
-          <div>좋아요: ${text.likesLength}</div>
-        `;
-        number++;
-      });
-    });
-</script>
-
+        <!-- 메인 콘텐츠 -->
+        <main>
+            <h2>엔트리 이야기</h2>
+            <p>제작 : 파이어런</p>
+            <div id="text1" class="text"><progress></progress></div>
+            <div id="text2" class="text"><progress></progress></div>
+            <div id="text3" class="text"><progress></progress></div>
+            <div id="text4" class="text"><progress></progress></div>
+            <div id="text5" class="text"><progress></progress></div>
+            <div id="text6" class="text"><progress></progress></div>
+            <div id="text7" class="text"><progress></progress></div>
+            <div id="text8" class="text"><progress></progress></div>
+            <div id="text9" class="text"><progress></progress></div>
+            <div id="text10" class="text"><progress></progress></div>
+        </main>
+        <script>
+            function getLikeUser(target, yoso) {
+                document.querySelector(`#${yoso}`).removeAttribute("href");
+                fetch(`https://getentrystory.vercel.app/like?${target}`)
+                    .then((res) => res.json())
+                    .then((req) => {
+                        document.querySelector(`#${yoso}`).innerHTML = "";
+                        req.forEach((i) => {
+                            document.querySelector(
+                                `#${yoso}`
+                            ).innerHTML += `${i.user.nickname}(${i.user.username})님,  `;
+                        });
+                        document.querySelector(`#${yoso}`).innerHTML = document
+                            .querySelector(`#${yoso}`)
+                            .innerHTML.slice(0, -3);
+                        document
+                            .querySelector(`#${yoso}`)
+                            .removeAttribute("class");
+                        document.querySelector(`#${yoso}`).outerHTML = document
+                            .querySelector(`#${yoso}`)
+                            .outerHTML.replace(
+                                `<a id="${yoso}">`,
+                                `<details id="${yoso}"><summary>(누른 유저 보기)</summary>`
+                            )
+                            .replace("</a>", "</details>");
+                    });
+            }
+            let userPro = "";
+            fetch("https://getentrystory.vercel.app/")
+                .then((res) => res.json())
+                .then((req) => {
+                    let number = 1;
+                    req.forEach((text) => {
+                        if (text.user.profileImage != null) {
+                            userPro = `<div class="info"><img class="user" src="https://playentry.org/uploads/${text.user.profileImage.filename.slice(
+                                0,
+                                2
+                            )}/${text.user.profileImage.filename.slice(2, 4)}/${
+                                text.user.profileImage.filename
+                            }.${text.user.profileImage.imageType}"></img>`;
+                        } else {
+                            userPro = `<div class="info"><img class="user" src="https://playentry.org/img/DefaultCardUserThmb.svg"></img>`;
+                        }
+                        document.querySelector("#text" + number).innerHTML =
+                            userPro +
+                            `<div class="realInfo">
+                            <div class="nickname">${text.user.nickname}</div>
+                            <div>댓글 : ${text.commentsLength}</div>
+                            <div>좋아요 : ${
+                                text.likesLength
+                            } <a id="Like${number}" class="LikeUser" href="javascript:getLikeUser('${
+                                text.id
+                            }', 'Like${number}')">(누른 유저 보기)</a></div>
+                            <div>${new Date(text.created).toLocaleString(
+                                "ko-kR"
+                            )}</div>
+                            <a class="goToEntry" href="https://playentry.org/community/entrystory/${
+                                text.id
+                            }">여기를 눌러서 글 바로가기</a>
+                            </div>
+                            </div>
+                            <div class="content">${text.content.replaceAll(
+                                "<",
+                                "&lt;"
+                            )}</div>`;
+                        number++;
+                    });
+                });
+        </script>
+    </body>
+</html>
 </body>
 </html>
