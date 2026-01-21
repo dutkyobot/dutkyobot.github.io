@@ -1,254 +1,237 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>두쿄봇 - 코드 실행기</title>
-  <link rel="icon" href="img/profile2.png" type="image/png">
-  <style>
-    /* 공통 스타일 */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
-    header {
-      background-color: #6CB4FD;
-      color: white;
-      text-align: center;
-      padding: 1rem 0;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
-    .logo a {
-      display: flex;
-      align-items: center;
-      color: inherit;
-      text-decoration: none; /* 링크 표시 제거 */
-    }
-    .logo img {
-      height: 35px;
-      margin-right: 0.5rem;
-      border-radius: 5px;
-      border:1.3px solid;
-      border-color:#585858
-    }
-    .logo span {
-      font-size: 1.2rem; /* 기본 글씨 크기 */
-      font-weight: bold;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      background-color: #337AB7;
-      transition: all 0.3s ease;
-    }
-    nav a:hover, nav a:focus {
-      background-color: white;
-      color: #6CB4FD;
-      box-shadow: 0 0 4px #6CB4FD;
-      outline: none;
-    }
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding-top: 2rem;
-      min-height: calc(100vh - 140px);
-    }
-    .content-box {
-      background-color: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: left;
-      max-width: 600px;
-      width: 90%;
-      margin-bottom: 2rem;
-    }
-    footer {
-      background-color: #6CB4FD;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      font-size: 0.9rem;
-    }
-    #html-executor-container {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-    #html-executor-container label {
-      display: block;
-      font-weight: bold;
-      margin-top: 15px;
-    }
-    #html-executor-container textarea {
-      width: 100%;
-      height: 150px;
-      margin-top: 10px;
-      resize: vertical;
-      border: 1px solid #ccc;
-      padding: 10px;
-      font-family: monospace;
-      border-radius: 8px;
-    }
-    .button-container {
-      margin-top: 15px;
-      text-align: center;
-    }
-    #html-executor-container button {
-      padding: 10px 20px;
-      font-size: 16px;
-      color: #fff;
-      background-color: #333;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    #html-executor-container button:hover {
-      background-color: #555;
-    }
-    #output {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border: 1px solid #ddd;
-      margin-top: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-    }
-    .resize-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    .resize-buttons button {
-      padding: 8px 16px;
-      font-size: 14px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .resize-buttons button:hover {
-      background-color: #0056b3;
-    }
-  
-    /* PC 전용 스타일 */
-    @media screen and (min-width: 768px) {
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.5rem 1rem;
-      }
-      .logo {
-        margin-bottom: 0;
-      }
-      .logo span {
-        font-size: 1.2rem;
-      }
-      nav {
-        justify-content: flex-end;
-        gap: 0;
-      }
-      nav a {
-        margin-left: 1rem;
-        background-color: transparent;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dutkyobot - 코드 실행기</title>
+    <!-- Tailwind CSS & FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f2f5f8;
+            color: #1e293b;
+        }
+
+        .header-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-gradient {
+            background: linear-gradient(135deg, #00D674 0%, #2F96FD 100%);
+        }
+
+        /* ToolHub 스타일 콘텐츠 박스 */
+        .content-card {
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 코드 에디터 스타일 */
+        .editor-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .editor-textarea {
+            width: 100%;
+            height: 120px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            color: #334155;
+            resize: vertical;
+            transition: all 0.2s;
+        }
+
+        .editor-textarea:focus {
+            outline: none;
+            background-color: #ffffff;
+            border-color: #3b82f6;
+            ring: 4px rgba(59, 130, 246, 0.1);
+        }
+
+        /* 실행 결과창 스타일 */
+        #output {
+            width: 100%;
+            height: 350px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            margin-top: 16px;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+    </style>
 </head>
-<body>
-  
-<header>
-  <div class="logo">
-    <a href="https://dutkyobot.github.io">
-      <img src="img/profile1.png" alt="두쿄봇 로고">
-      <span>두쿄봇</span>
-    </a>
-  </div>
-  <nav>
-    <a href="https://dutkyobot.github.io/code">코드 실행기</a>
-    <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
-    <a href="https://dutkyobot.github.io/">준비중</a>
-    <a href="https://dutkyobot.github.io/">준비중 2</a>
-  </nav>
-</header>
+<body class="min-h-screen flex flex-col">
 
-<main>
-  <div class="content-box">
-    <h2>코드 실행기</h2>
-    <p>HTML, CSS, JavaScript 코드를 입력하고 실행해보세요!</p>
-    <div id="html-executor-container">
-      <label for="html">HTML 코드</label>
-      <textarea id="html" placeholder="HTML 코드를 여기에 입력하세요..."></textarea>
-      <label for="css">CSS 코드</label>
-      <textarea id="css" placeholder="CSS 코드를 여기에 입력하세요..."></textarea>
-      <label for="js">JavaScript 코드</label>
-      <textarea id="js" placeholder="JavaScript 코드를 여기에 입력하세요..."></textarea>
-      <div class="button-container">
-        <button onclick="runCode()">코드 실행</button>
-      </div>
-      <iframe id="output"></iframe>
-      <div class="resize-buttons">
-        <button onclick="resizeOutput(1.2)">확대</button>
-        <button onclick="resizeOutput(0.8)">축소</button>
-      </div>
-    </div>
-  </div>
-</main>
+    <!-- 메인 화면과 동일한 헤더 -->
+    <header class="header-glass sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="https://dutkyobot.github.io" class="flex items-center space-x-2.5 group">
+                <div class="w-8 h-8 brand-gradient rounded-lg flex items-center justify-center shadow-sm">
+                    <img src="img/profile3.png" alt="Logo" class="h-6 w-6 rounded" onerror="this.src='https://via.placeholder.com/32?text=D'">
+                </div>
+                <span class="text-lg font-bold tracking-tight text-slate-900">Dutkyobot</span>
+            </a>
+            
+            <nav class="hidden sm:flex items-center space-x-7">
+                <a href="https://dutkyobot.github.io/code" class="text-sm font-bold text-blue-600">코드 실행기</a>
+                <a href="https://dutkyobot.github.io/entrystory" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">엔트리 이야기</a>
+                <a href="https://github.com/dutkyobot" target="_blank" class="text-slate-400 hover:text-slate-900"><i class="fab fa-github text-xl"></i></a>
+            </nav>
+        </div>
+    </header>
 
-<footer>
-  <a href="https://github.com/dutkyobot/dutkyobot.github.io"> <img src="img/github-mark.svg" width="40px"> </a>
-  <p>&copy; 2024. 두쿄봇. All Rights Reserved.</p>
-</footer>
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        
+        <!-- 타이틀 영역 -->
+        <div class="mb-10 flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900 tracking-tight">코드 실행기</h1>
+                <p class="text-slate-500 mt-1">HTML, CSS, JS를 자유롭게 테스트하세요.</p>
+            </div>
+            <div class="flex space-x-2">
+                <button onclick="resizeOutput(1.1)" class="btn-secondary" title="확대"><i class="fas fa-search-plus"></i></button>
+                <button onclick="resizeOutput(0.9)" class="btn-secondary" title="축소"><i class="fas fa-search-minus"></i></button>
+            </div>
+        </div>
 
-<script>
-  let scale = 1;
+        <div class="content-card p-8">
+            <!-- 에디터 그리드 -->
+            <div class="space-y-6">
+                <div>
+                    <label class="editor-label"><i class="fab fa-html5 mr-2 text-orange-500"></i> HTML</label>
+                    <textarea id="html" class="editor-textarea" placeholder="HTML 코드를 입력하세요..."></textarea>
+                </div>
 
-  function runCode() {
-    const html = document.getElementById("html").value;
-    const css = document.getElementById("css").value;
-    const js = document.getElementById("js").value;
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="editor-label"><i class="fab fa-css3-alt mr-2 text-blue-500"></i> CSS</label>
+                        <textarea id="css" class="editor-textarea" placeholder="CSS 코드를 입력하세요..."></textarea>
+                    </div>
+                    <div>
+                        <label class="editor-label"><i class="fab fa-js mr-2 text-yellow-500"></i> JavaScript</label>
+                        <textarea id="js" class="editor-textarea" placeholder="JS 코드를 입력하세요..."></textarea>
+                    </div>
+                </div>
 
-    const output = document.getElementById("output");
-    const fullCode = `
-      <html>
-      <head><style>${css}</style></head>
-      <body>
-      ${html}
-      <script>${js}<\/script>
-      </body>
-      </html>
-    `;
-    output.srcdoc = fullCode;
-  }
+                <div class="flex justify-center pt-4">
+                    <button onclick="runCode()" class="btn-primary w-full md:w-auto px-12">
+                        <i class="fas fa-play mr-2 text-sm"></i> 코드 실행
+                    </button>
+                </div>
+            </div>
 
-  function resizeOutput(factor) {
-    scale *= factor;
-    const output = document.getElementById("output");
-    output.style.transform = `scale(${scale})`;
-    output.style.transformOrigin = "top left";
-  }
-</script>
+            <!-- 결과 창 -->
+            <div class="mt-10">
+                <div class="flex items-center justify-between mb-3 px-1">
+                    <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Preview Result</span>
+                    <span class="flex space-x-1.5">
+                        <span class="w-3 h-3 rounded-full bg-slate-200"></span>
+                        <span class="w-3 h-3 rounded-full bg-slate-200"></span>
+                        <span class="w-3 h-3 rounded-full bg-slate-200"></span>
+                    </span>
+                </div>
+                <div id="output-container" class="overflow-hidden bg-slate-50 rounded-2xl border border-slate-200">
+                    <iframe id="output" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="py-10 border-t border-slate-200 mt-12">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-400 text-sm">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <span class="font-bold text-slate-900">Dutkyobot</span>
+                <span>&copy; 2026. All Rights Reserved.</span>
+            </div>
+            <a href="https://github.com/dutkyobot" class="hover:text-slate-900"><i class="fab fa-github text-xl"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        let scale = 1;
+
+        function runCode() {
+            const html = document.getElementById("html").value;
+            const css = document.getElementById("css").value;
+            const js = document.getElementById("js").value;
+
+            const output = document.getElementById("output");
+            const fullCode = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <style>
+                        body { margin: 0; padding: 20px; font-family: sans-serif; }
+                        ${css}
+                    </style>
+                </head>
+                <body>
+                    ${html}
+                    <script>${js}<\/script>
+                </body>
+                </html>
+            `;
+            output.srcdoc = fullCode;
+        }
+
+        function resizeOutput(factor) {
+            scale *= factor;
+            const output = document.getElementById("output");
+            output.style.transform = `scale(${scale})`;
+            output.style.transformOrigin = "top center";
+        }
+    </script>
 </body>
 </html>
-
-
