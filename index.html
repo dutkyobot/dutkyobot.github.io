@@ -1,175 +1,166 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dutkyobot</title>
-  <link rel="icon" href="img/profile2.png" type="image/png">
-  <style>
-    /* 기본 설정 */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dutkyobot - 스마트 도구 모음</title>
+    <!-- Tailwind CSS & FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f2f5f8; /* ToolHub 특유의 배경색 */
+            color: #1e293b;
+        }
 
-    /* 헤더 영역 */
-    header {
-      background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), linear-gradient(225deg, #00D674, #2F96FD);
-      background-color: #6CB4FD;
-      color: white;
-      text-align: center;
-      padding: 1rem 0;
-    }
+        /* ToolHub 스타일 헤더 */
+        .header-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
+        /* ToolHub 카드 스타일 통일 */
+        .tool-card {
+            background: #ffffff;
+            border-radius: 20px; /* ToolHub 스타일의 부드러운 곡률 */
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
 
-    .logo a {
-      display: flex;
-      align-items: center;
-      color: inherit;
-      text-decoration: none;
-    }
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.08);
+            border-color: #3b82f6; /* 호버 시 포인트 컬러 */
+        }
 
-    .logo img {
-      height: 35px;
-      margin-right: 0.5rem;
-      border-radius: 5px;
-      border: 1.3px solid #585858;
-    }
+        /* 아이콘 박스 스타일 */
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
 
-    .logo span {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
+        .brand-gradient {
+            background: linear-gradient(135deg, #00D674 0%, #2F96FD 100%);
+        }
 
-    /* 네비게이션 */
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      background-color: #337AB7;
-      transition: all 0.3s ease;
-    }
-
-    nav a:hover, nav a:focus {
-      background-color: white;
-      color: #6CB4FD;
-      box-shadow: 0 0 4px #6CB4FD;
-      outline: none;
-    }
-
-    /* 메인 콘텐츠 */
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding-top: 2rem;
-      min-height: calc(100vh - 140px);
-    }
-
-    .content-box {
-      background-color: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: left;
-      max-width: 600px;
-      width: 90%;
-      margin-bottom: 2rem;
-    }
-
-    /* 푸터 영역 */
-    footer {
-      background: background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), linear-gradient(225deg, #00D674, #2F96FD);
-      background-color: #6CB4FD;
-      color: white;
-      text-align: left;
-      padding: 20px;
-      font-size: 0.9rem;
-    }
-
-    footer img {
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    /* PC 레이아웃 (768px 이상) */
-    @media screen and (min-width: 768px) {
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.5rem 1rem;
-      }
-      
-      .logo {
-        margin-bottom: 0;
-      }
-
-      nav {
-        justify-content: flex-end;
-        gap: 0;
-      }
-
-      nav a {
-        margin-left: 1rem;
-        background-color: transparent;
-      }
-    }
-  </style>
+        /* 버튼 및 뱃지 스타일 */
+        .category-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+    </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 
-<header>
-  <div class="logo">
-    <a href="https://dutkyobot.github.io">
-      <img src="img/profile3.png" alt="두쿄봇 로고">
-      <span>Dutkyobot</span>
-    </a>
-  </div>
-  <nav>
-    <a href="https://dutkyobot.github.io/code">코드 실행기</a>
-    <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
-    <a href="https://dutkyobot.github.io/">준비 중</a>
-    <a href="https://dutkyobot.github.io/">준비 중</a>
-  </nav>
-</header>
+    <!-- 헤더 영역 -->
+    <header class="header-glass sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-2.5 group">
+                <div class="w-8 h-8 brand-gradient rounded-lg flex items-center justify-center shadow-sm">
+                    <img src="img/profile3.png" alt="Logo" class="h-6 w-6 rounded" onerror="this.src='https://via.placeholder.com/32?text=D'">
+                </div>
+                <span class="text-lg font-bold tracking-tight text-slate-900">Dutkyobot</span>
+            </a>
+            
+            <nav class="hidden sm:flex items-center space-x-7">
+                <a href="https://dutkyobot.github.io/code" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">코드 실행기</a>
+                <a href="https://dutkyobot.github.io/entrystory" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">엔트리 이야기</a>
+                <a href="https://github.com/dutkyobot" target="_blank" class="text-slate-400 hover:text-slate-900"><i class="fab fa-github text-xl"></i></a>
+            </nav>
+        </div>
+    </header>
 
-<main>
-  <div class="content-box">
-    <h2>환영합니다! 👋</h2>
-    <p>text</p>
-  </div>
-</main>
+    <!-- 메인 섹션 -->
+    <main class="flex-1 max-w-6xl mx-auto w-full px-6 py-16">
+        
+        <!-- 타이틀 섹션 -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">
+                Smart Tool Directory
+            </h1>
+            <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">
+                Dutkyobot의 모든 기능을 한눈에 확인하고 필요한 도구로 바로 이동하세요.
+            </p>
+        </div>
 
-<footer>
-  <a href="https://github.com/dutkyobot/dutkyobot.github.io">
-    <img src="img/github-mark.svg" alt="GitHub Logo" width="40">
-  </a>
-  <p>&copy; 2026. 두쿄봇. All Rights Reserved.</p>
-</footer>
+        <!-- 도구 그리드 (ToolHub 레이아웃 통일) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- 도구 1: 코드 실행기 -->
+            <a href="https://dutkyobot.github.io/code" class="tool-card p-6 flex flex-col group">
+                <div class="icon-box bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    <i class="fas fa-terminal text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800">코드 실행기</h3>
+                <p class="text-sm text-slate-500 mt-2 mb-6 flex-1 leading-relaxed">
+                    웹 브라우저 상에서 다양한 프로그래밍 언어를 즉시 실행하고 결과를 확인합니다.
+                </p>
+                <div class="flex items-center justify-between">
+                    <span class="category-badge bg-blue-50 text-blue-600">Development</span>
+                    <span class="text-xs text-slate-400 group-hover:text-blue-600 font-medium transition-colors">이동하기 <i class="fas fa-arrow-right ml-1"></i></span>
+                </div>
+            </a>
+
+            <!-- 도구 2: 엔트리 이야기 -->
+            <a href="https://dutkyobot.github.io/entrystory" class="tool-card p-6 flex flex-col group">
+                <div class="icon-box bg-green-50 text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                    <i class="fas fa-comments text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800">엔트리 이야기</h3>
+                <p class="text-sm text-slate-500 mt-2 mb-6 flex-1 leading-relaxed">
+                    엔트리 커뮤니티의 실시간 인기글과 유용한 정보를 한곳에서 모아봅니다.
+                </p>
+                <div class="flex items-center justify-between">
+                    <span class="category-badge bg-green-50 text-green-600">Community</span>
+                    <span class="text-xs text-slate-400 group-hover:text-green-600 font-medium transition-colors">이동하기 <i class="fas fa-arrow-right ml-1"></i></span>
+                </div>
+            </a>
+
+            <!-- 도구 3: 준비 중 -->
+            <div class="tool-card p-6 flex flex-col opacity-60 cursor-default">
+                <div class="icon-box bg-slate-100 text-slate-400">
+                    <i class="fas fa-plus text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800">새로운 기능</h3>
+                <p class="text-sm text-slate-500 mt-2 mb-6 flex-1 leading-relaxed">
+                    사용자 분들의 피드백을 바탕으로 더 유용한 도구들이 추가될 예정입니다.
+                </p>
+                <div class="flex items-center justify-between">
+                    <span class="category-badge bg-slate-100 text-slate-400">Coming Soon</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="py-10 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-400 text-sm">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <span class="font-bold text-slate-900">Dutkyobot</span>
+                <span>&copy; 2026. All Rights Reserved.</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-slate-600">이용약관</a>
+                <a href="#" class="hover:text-slate-600">개인정보처리방침</a>
+                <a href="https://github.com/dutkyobot" class="hover:text-slate-900"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>
-
-
-
-
-
