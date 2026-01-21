@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolHub - 모든 도구를 한곳에</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-focus:focus-within {
+            ring: 2px;
+            ring-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- 사이드바 -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex-shrink-0 hidden md:flex flex-col">
+        <div class="p-6 flex items-center space-x-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <i class="fas fa-cube text-white"></i>
+            </div>
+            <span class="text-xl font-bold text-gray-800">ToolHub</span>
+        </div>
+
+        <nav class="flex-1 px-4 space-y-1">
+            <p class="text-xs font-semibold text-gray-400 uppercase px-3 mb-2 tracking-wider">Menu</p>
+            <a href="#" class="sidebar-item flex items-center px-3 py-2 text-sm font-medium rounded-lg text-blue-600 bg-blue-50">
+                <i class="fas fa-th-large mr-3 w-5"></i> 모든 도구
+            </a>
+            <a href="#" class="sidebar-item flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 transition-colors">
+                <i class="fas fa-star mr-3 w-5"></i> 즐겨찾기
+            </a>
+            <a href="#" class="sidebar-item flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 transition-colors">
+                <i class="fas fa-history mr-3 w-5"></i> 최근 사용
+            </a>
+
+            <p class="text-xs font-semibold text-gray-400 uppercase px-3 mt-8 mb-2 tracking-wider">Categories</p>
+            <a href="#" class="sidebar-item flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 transition-colors">
+                <i class="fas fa-code mr-3 w-5 text-purple-500"></i> 개발 도구
+            </a>
+            <a href="#" class="sidebar-item flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 transition-colors">
+                <i class="fas fa-pen-nib mr-3 w-5 text-pink-500"></i> 디자인
+            </a>
+            <a href="#" class="sidebar-item flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 transition-colors">
+                <i class="fas fa-file-invoice mr-3 w-5 text-orange-500"></i> 생산성
+            </a>
+            <a href="#" class="sidebar-item flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 transition-colors">
+                <i class="fas fa-shield-alt mr-3 w-5 text-green-500"></i> 보안/암호화
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-100">
+            <button class="w-full flex items-center justify-center space-x-2 py-2 px-4 bg-gray-900 text-white rounded-lg hover:bg-black transition-colors">
+                <i class="fab fa-github"></i>
+                <span class="text-sm font-medium">Contribute</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+        
+        <!-- 상단 헤더 (검색 및 프로필) -->
+        <header class="h-16 bg-white border-bottom border-gray-200 flex items-center justify-between px-8 z-10">
+            <div class="flex-1 max-w-xl">
+                <div class="relative group">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </span>
+                    <input type="text" 
+                           class="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-xl leading-5 bg-gray-50 placeholder-gray-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all sm:text-sm" 
+                           placeholder="사용하고 싶은 도구를 검색해보세요...">
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4 ml-4">
+                <button class="p-2 text-gray-400 hover:text-gray-600">
+                    <i class="far fa-bell text-xl"></i>
+                </button>
+                <div class="h-8 w-8 rounded-full bg-blue-100 border border-blue-200 flex items-center justify-center text-blue-600 font-bold text-xs cursor-pointer">
+                    JS
+                </div>
+            </div>
+        </header>
+
+        <!-- 스크롤 가능한 콘텐츠 -->
+        <div class="flex-1 overflow-y-auto p-8">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- 환영 섹션 -->
+                <section class="mb-10">
+                    <h1 class="text-2xl font-bold text-gray-900">도구 라이브러리</h1>
+                    <p class="text-gray-500 mt-1">업무 효율을 높여주는 총 24개의 도구가 준비되어 있습니다.</p>
+                </section>
+
+                <!-- 툴 그리드 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    
+                    <!-- 툴 카드 1 -->
+                    <div class="tool-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col cursor-pointer">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-terminal text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800">JSON 포맷터</h3>
+                        <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">어지러운 JSON 데이터를 보기 좋게 정렬하고 유효성을 검사합니다.</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xs font-medium px-2 py-1 bg-purple-50 text-purple-600 rounded">개발</span>
+                            <i class="far fa-star text-gray-300 hover:text-yellow-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- 툴 카드 2 -->
+                    <div class="tool-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col cursor-pointer">
+                        <div class="w-12 h-12 bg-pink-50 text-pink-600 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-palette text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800">이미지 압축</h3>
+                        <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">화질 저하를 최소화하면서 이미지 파일 용량을 줄여줍니다.</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xs font-medium px-2 py-1 bg-pink-50 text-pink-600 rounded">디자인</span>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- 툴 카드 3 -->
+                    <div class="tool-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col cursor-pointer">
+                        <div class="w-12 h-12 bg-green-50 text-green-600 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-lock text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800">비밀번호 생성기</h3>
+                        <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">강력하고 안전한 무작위 비밀번호를 즉시 생성합니다.</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xs font-medium px-2 py-1 bg-green-50 text-green-600 rounded">보안</span>
+                            <i class="far fa-star text-gray-300 hover:text-yellow-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- 툴 카드 4 -->
+                    <div class="tool-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col cursor-pointer">
+                        <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-file-pdf text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800">PDF 변환기</h3>
+                        <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">문서 파일을 PDF로 변환하거나 이미지를 합쳐 PDF를 만듭니다.</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xs font-medium px-2 py-1 bg-orange-50 text-orange-600 rounded">생산성</span>
+                            <i class="far fa-star text-gray-300 hover:text-yellow-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- 추가 툴 샘플들 -->
+                    <div class="tool-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col cursor-pointer">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-exchange-alt text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800">단위 변환기</h3>
+                        <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">길이, 무게, 부피 등 다양한 단위들을 실시간으로 변환합니다.</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xs font-medium px-2 py-1 bg-indigo-50 text-indigo-600 rounded">생산성</span>
+                            <i class="far fa-star text-gray-300"></i>
+                        </div>
+                    </div>
+
+                    <div class="tool-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col cursor-pointer">
+                        <div class="w-12 h-12 bg-cyan-50 text-cyan-600 rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-font text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800">글자수 세기</h3>
+                        <p class="text-sm text-gray-500 mt-2 mb-4 line-clamp-2">공백 포함/제외 글자수와 단어수를 정확하게 측정합니다.</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-xs font-medium px-2 py-1 bg-cyan-50 text-cyan-600 rounded">생산성</span>
+                            <i class="far fa-star text-gray-300"></i>
+                        </div>
+                    </div>
+
+                    <div class="tool-card bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col cursor-pointer border-dashed border-2 flex items-center justify-center text-gray-400 hover:text-blue-500 hover:border-blue-300 transition-all">
+                        <div class="text-center">
+                            <i class="fas fa-plus mb-2 text-2xl"></i>
+                            <p class="text-sm font-medium">새 도구 제안</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 모바일 메뉴 버튼 (모바일 전용) -->
+    <div class="fixed bottom-6 right-6 md:hidden">
+        <button class="w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center text-2xl">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+</body>
+</html>
