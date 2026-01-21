@@ -1,205 +1,216 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>두쿄봇 - 엔트리 이야기</title>
-  <link rel="icon" href="img/profile2.png" type="image/png">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
-    header {
-      background-color: #6CB4FD;
-      color: white;
-      text-align: center;
-      padding: 1rem 0;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
-    .logo a {
-      display: flex;
-      align-items: center;
-      color: inherit;
-      text-decoration: none; /* 링크 표시 제거 */
-    }
-    .logo img {
-      height: 35px;
-      margin-right: 0.5rem;
-      border-radius: 5px;
-      border:1.3px solid;
-      border-color:#585858
-    }
-    .logo span {
-      font-size: 1.2rem; /* 기본 글씨 크기 */
-      font-weight: bold;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      background-color: #337AB7;
-      transition: all 0.3s ease;
-    }
-    nav a:hover, nav a:focus {
-      background-color: white;
-      color: #6CB4FD;
-      box-shadow: 0 0 4px #6CB4FD;
-      outline: none;
-    }
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding-top: 2rem;
-      min-height: calc(100vh - 140px);
-    }
-    .content-box {
-      background-color: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: left;
-      max-width: 600px;
-      width: 90%;
-      margin-bottom: 2rem;
-    }
-    .text {
-      background-color: #333;
-      color: #fff;
-      margin: 25px;
-      padding: 25px;
-      border-radius: 10px;
-    }
-    footer {
-      background-color: #6CB4FD;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      font-size: 0.9rem;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dutkyobot - 엔트리 이야기</title>
+    <!-- Tailwind CSS & FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f2f5f8;
+            color: #1e293b;
+        }
 
-    /* PC 전용 스타일 */
-    @media screen and (min-width: 768px) {
-      header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.5rem 1rem;
-      }
-      .logo {
-        margin-bottom: 0;
-      }
-      .logo span {
-        font-size: 1.2rem;
-      }
-      nav {
-        justify-content: flex-end;
-        gap: 0;
-      }
-      nav a {
-        margin-left: 1rem;
-        background-color: transparent;
-      }
-    }
-  </style>
+        .header-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-gradient {
+            background: linear-gradient(135deg, #00D674 0%, #2F96FD 100%);
+        }
+
+        /* ToolHub 스타일 카드 */
+        .story-card {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            padding: 24px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .story-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.05);
+            border-color: #3b82f6;
+        }
+
+        /* 닉네임 및 유저 정보 */
+        .nickname {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1.05rem;
+        }
+
+        .stat-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .like-badge { background: #fff1f2; color: #e11d48; }
+        .comment-badge { background: #f0f9ff; color: #0369a1; }
+
+        /* 로딩 애니메이션 */
+        .loading-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        summary {
+            cursor: pointer;
+            font-size: 12px;
+            color: #94a3b8;
+            list-style: none;
+            margin-top: 12px;
+            text-decoration: underline;
+        }
+        
+        summary:hover { color: #3b82f6; }
+
+        details div {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 8px;
+            line-height: 1.6;
+        }
+    </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 
-<header>
-  <div class="logo">
-    <a href="https://dutkyobot.github.io">
-      <img src="img/profile1.png" alt="두쿄봇 로고">
-      <span>두쿄봇</span>
-    </a>
-  </div>
-  <nav>
-    <a href="https://dutkyobot.github.io/code">코드 실행기</a>
-    <a href="https://dutkyobot.github.io/entrystory">엔트리 이야기</a>
-    <a href="https://dutkyobot.github.io/">준비중</a>
-    <a href="https://dutkyobot.github.io/">준비중 2</a>
-  </nav>
-</header>
+    <!-- 통합 헤더 -->
+    <header class="header-glass sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="https://dutkyobot.github.io" class="flex items-center space-x-2.5 group">
+                <div class="w-8 h-8 brand-gradient rounded-lg flex items-center justify-center shadow-sm">
+                    <img src="img/profile3.png" alt="Logo" class="h-6 w-6 rounded" onerror="this.src='https://via.placeholder.com/32?text=D'">
+                </div>
+                <span class="text-lg font-bold tracking-tight text-slate-900">Dutkyobot</span>
+            </a>
+            
+            <nav class="hidden sm:flex items-center space-x-7">
+                <a href="https://dutkyobot.github.io/code" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">코드 실행기</a>
+                <a href="https://dutkyobot.github.io/entrystory" class="text-sm font-bold text-blue-600">엔트리 이야기</a>
+                <a href="https://github.com/dutkyobot" target="_blank" class="text-slate-400 hover:text-slate-900"><i class="fab fa-github text-xl"></i></a>
+            </nav>
+        </div>
+    </header>
 
-<main>
-  <h1>작동하지 않음.</h1>
-  <!--
-  <div class="content-box">
-    <h2>엔트리 이야기</h2>
-    <p>제작 | 파이어런</p>
-    <div id="text1" class="text"><progress></progress></div>
-    <div id="text2" class="text"><progress></progress></div>
-    <div id="text3" class="text"><progress></progress></div>
-    <div id="text4" class="text"><progress></progress></div>
-    <div id="text5" class="text"><progress></progress></div>
-    <div id="text6" class="text"><progress></progress></div>
-    <div id="text7" class="text"><progress></progress></div>
-    <div id="text8" class="text"><progress></progress></div>
-    <div id="text9" class="text"><progress></progress></div>
-    <div id="text10" class="text"><progress></progress></div>
-  </div>-->
-</main>
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        
+        <!-- 타이틀 영역 -->
+        <div class="mb-10">
+            <h1 class="text-3xl font-bold text-slate-900 tracking-tight">엔트리 이야기</h1>
+            <p class="text-slate-500 mt-1">실시간 인기 엔트리 이야기 게시글을 확인합니다. (제작: 파이어런)</p>
+        </div>
 
-<footer>
-  <a href="https://github.com/dutkyobot/dutkyobot.github.io"> <img src="img/github-mark.svg" width="40px"> </a>
-  <p>&copy; 2024. 두쿄봇. All Rights Reserved.</p>
-</footer>
+        <!-- 스토리 리스트 컨테이너 -->
+        <div id="story-container" class="space-y-4">
+            <!-- 초기 로딩 상태 (Skeleton UI 느낌) -->
+            <div class="story-card loading-pulse">
+                <div class="h-5 bg-slate-100 rounded w-1/3 mb-4"></div>
+                <div class="h-4 bg-slate-50 rounded w-1/4"></div>
+            </div>
+            <div class="story-card loading-pulse">
+                <div class="h-5 bg-slate-100 rounded w-1/3 mb-4"></div>
+                <div class="h-4 bg-slate-50 rounded w-1/4"></div>
+            </div>
+            <div class="story-card loading-pulse">
+                <div class="h-5 bg-slate-100 rounded w-1/3 mb-4"></div>
+                <div class="h-4 bg-slate-50 rounded w-1/4"></div>
+            </div>
+        </div>
+    </main>
 
-<script>
-  // 기존 스크립트 복사
-  function getLikeUser(target, yoso) {
-    document.querySelector(`#${yoso}`).removeAttribute("href");
-    fetch(`https://getentrystory.vercel.app/like?${target}`)
-      .then((res) => res.json())
-      .then((req) => {
-        document.querySelector(`#${yoso}`).innerHTML = "";
-        req.forEach((i) => {
-          document.querySelector(`#${yoso}`).innerHTML += `${i.user.nickname}(${i.user.username})님,  `;
-        });
-        document.querySelector(`#${yoso}`).innerHTML = document
-          .querySelector(`#${yoso}`)
-          .innerHTML.slice(0, -3);
-        document.querySelector(`#${yoso}`).outerHTML = document
-          .querySelector(`#${yoso}`)
-          .outerHTML.replace(
-            `<a id="${yoso}">`,
-            `<details id="${yoso}"><summary>(누른 유저 보기)</summary>`
-          )
-          .replace("</a>", "</details>");
-      });
-  }
-  fetch("https://getentrystory.vercel.app/")
-    .then((res) => res.json())
-    .then((req) => {
-      let number = 1;
-      req.forEach((text) => {
-        document.querySelector("#text" + number).innerHTML = ` 
-          <div class="nickname">${text.user.nickname}</div>
-          <div>댓글: ${text.commentsLength}</div>
-          <div>좋아요: ${text.likesLength}</div>
-        `;
-        number++;
-      });
-    });
-</script>
+    <!-- 푸터 -->
+    <footer class="py-10 border-t border-slate-200 mt-12">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-400 text-sm">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <span class="font-bold text-slate-900">Dutkyobot</span>
+                <span>&copy; 2026. All Rights Reserved.</span>
+            </div>
+            <a href="https://github.com/dutkyobot" class="hover:text-slate-900"><i class="fab fa-github text-xl"></i></a>
+        </div>
+    </footer>
 
+    <script>
+        const storyContainer = document.getElementById('story-container');
+
+        // 좋아요 유저 가져오기
+        async function getLikeUser(target, yosoId) {
+            const detailsElement = document.getElementById(yosoId);
+            const summary = detailsElement.querySelector('summary');
+            const contentDiv = detailsElement.querySelector('.like-users-content');
+
+            if (contentDiv.innerHTML !== "불러오는 중...") return;
+
+            try {
+                const res = await fetch(`https://getentrystory.vercel.app/like?${target}`);
+                const data = await res.json();
+                
+                if (data.length === 0) {
+                    contentDiv.innerHTML = "좋아요를 누른 유저가 없습니다.";
+                } else {
+                    const userList = data.map(i => `${i.user.nickname}(${i.user.username})`).join(', ');
+                    contentDiv.innerHTML = userList;
+                }
+            } catch (error) {
+                contentDiv.innerHTML = "데이터를 불러오지 못했습니다.";
+            }
+        }
+
+        // 메인 데이터 가져오기
+        fetch("https://getentrystory.vercel.app/")
+            .then((res) => res.json())
+            .then((req) => {
+                storyContainer.innerHTML = ""; // 로딩 상태 제거
+                
+                req.forEach((text, index) => {
+                    const storyId = `story-details-${index}`;
+                    const card = document.createElement('div');
+                    card.className = 'story-card';
+                    card.innerHTML = `
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                            <div>
+                                <div class="nickname mb-1">${text.user.nickname}</div>
+                                <div class="flex items-center mt-2">
+                                    <span class="stat-badge comment-badge">
+                                        <i class="far fa-comment-dots mr-1.5"></i> 댓글 ${text.commentsLength}
+                                    </span>
+                                    <span class="stat-badge like-badge">
+                                        <i class="far fa-heart mr-1.5"></i> 좋아요 ${text.likesLength}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <details id="${storyId}" onclick="getLikeUser('${text._id}', '${storyId}')">
+                                    <summary>(좋아요 누른 유저 보기)</summary>
+                                    <div class="like-users-content">불러오는 중...</div>
+                                </details>
+                            </div>
+                        </div>
+                    `;
+                    storyContainer.appendChild(card);
+                });
+            })
+            .catch(err => {
+                storyContainer.innerHTML = `<div class="p-8 text-center text-slate-400">데이터를 불러오는 중 오류가 발생했습니다.</div>`;
+            });
+    </script>
 </body>
 </html>
-
-
-
