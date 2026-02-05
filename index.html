@@ -58,14 +58,26 @@
             text-transform: uppercase;
             letter-spacing: 0.02em;
         }
+
+        .verify-badge {
+            background: #e0f2fe;
+            color: #0284c7;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- 헤더 영역 -->
+    <!-- Header -->
     <header class="header-glass sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="#" class="flex items-center space-x-2.5 group">
+            <a href="index.html" class="flex items-center space-x-2.5 group">
                 <div class="w-8 h-8 brand-gradient rounded-lg flex items-center justify-center shadow-sm">
                     <img src="img/profile3.png" alt="Logo" class="h-6 w-6 rounded" onerror="this.src='https://via.placeholder.com/32?text=D'">
                 </div>
@@ -73,17 +85,15 @@
             </a>
             
             <nav class="hidden sm:flex items-center space-x-7">
-                <a href="https://dutkyobot.github.io/RunCode" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">코드 실행기</a>
-                <a href="https://dutkyobot.github.io/ToolHub" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">ToolHub</a>
+                <a href="https://dutkyobot.github.io/code" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">코드 실행기</a>
+                <a href="https://dutkyobot.github.io/TOOLBOX" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">ToolHub</a>
                 <a href="https://github.com/dutkyobot" target="_blank" class="text-slate-400 hover:text-slate-900"><i class="fab fa-github text-xl"></i></a>
             </nav>
         </div>
     </header>
 
-    <!-- 메인 섹션 -->
     <main class="flex-1 max-w-6xl mx-auto w-full px-6 py-16">
-        
-        <!-- 타이틀 섹션 -->
+        <!-- Hero Section -->
         <div class="text-center mb-16">
             <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">
                 Smart Tool Directory
@@ -93,11 +103,9 @@
             </p>
         </div>
 
-        <!-- 도구 그리드 -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            
-            <!-- 도구 1: 코드 실행기 -->
-            <a href="https://dutkyobot.github.io/RunCode" class="tool-card p-6 flex flex-col group">
+        <!-- Tool Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 max-w-4xl mx-auto mb-16">
+            <a href="https://dutkyobot.github.io/code" class="tool-card p-6 flex flex-col group">
                 <div class="icon-box bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                     <i class="fas fa-terminal text-xl"></i>
                 </div>
@@ -111,8 +119,7 @@
                 </div>
             </a>
 
-            <!-- 도구 2: ToolHub -->
-            <a href="https://dutkyobot.github.io/ToolHub" class="tool-card p-6 flex flex-col group">
+            <a href="https://dutkyobot.github.io/TOOLBOX" class="tool-card p-6 flex flex-col group">
                 <div class="icon-box bg-blue-600 text-white">
                     <i class="fas fa-cube text-xl"></i>
                 </div>
@@ -125,11 +132,31 @@
                     <span class="text-xs text-slate-400 group-hover:text-blue-600 font-medium transition-colors">이동하기 <i class="fas fa-arrow-right ml-1"></i></span>
                 </div>
             </a>
+        </div>
 
+        <!-- Official Accounts Redirect Section -->
+        <div class="max-w-4xl mx-auto border-t border-slate-200 pt-16">
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between shadow-sm hover:shadow-md transition-shadow">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center gap-3 mb-2">
+                        <h2 class="text-2xl font-bold text-slate-900">Official Accounts</h2>
+                        <div class="verify-badge">
+                            <i class="fas fa-check-circle"></i> Verified
+                        </div>
+                    </div>
+                    <p class="text-slate-500 leading-relaxed">
+                        사칭 피해 방지를 위해 Dutkyobot의 공식 계정 목록을 운영하고 있습니다.<br>
+                        승인된 플랫폼 계정들을 아래 페이지에서 확인하세요.
+                    </p>
+                </div>
+                <a href="account.html" class="inline-flex items-center justify-center px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-blue-600 transition-colors group">
+                    계정 목록 보기
+                    <i class="fas fa-chevron-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
         </div>
     </main>
 
-    <!-- 푸터 -->
     <footer class="py-10 border-t border-slate-200">
         <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-400 text-sm">
             <div class="flex items-center space-x-2 mb-4 md:mb-0">
@@ -141,6 +168,5 @@
             </div>
         </div>
     </footer>
-
 </body>
 </html>
