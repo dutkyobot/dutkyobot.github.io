@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Accounts - Dutkyobot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+        body { font-family: 'Pretendard', sans-serif; background-color: #f2f5f8; color: #1e293b; }
+        .header-glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+        .account-card { background: white; border: 1px solid rgba(0, 0, 0, 0.05); border-radius: 1.5rem; transition: all 0.2s; }
+        .account-card:hover { border-color: #00D674; transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05); }
+        
+        /* 버튼 스타일: 배경과 어울리는 차분한 톤 */
+        .btn-action { 
+            background-color: #1e293b; 
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        .btn-action:hover { 
+            background-color: #334155;
+            transform: scale(1.02);
+        }
+        
+        /* 아이콘 박스 배경 복구 */
+        .icon-box-entry { background-color: #00D674; }
+        .icon-box-github { background-color: #24292f; }
+        .icon-box-email { background-color: #4285f4; }
+
+        .entry-logo {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <header class="header-glass sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="https://dutkyobot.github.io/" class="flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition-colors">
+                <i class="fas fa-arrow-left"></i>
+                <span class="font-bold">돌아가기</span>
+            </a>
+            <span class="text-sm font-bold text-slate-400">Identity Verification</span>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-3">
+                <h1 class="text-3xl font-extrabold text-slate-900">Official Accounts</h1>
+                <span class="bg-blue-600 text-white text-[10px] px-2 py-1 rounded-md font-bold uppercase tracking-widest">Trust</span>
+            </div>
+            <p class="text-slate-500 text-sm sm:text-base leading-relaxed">Dutkyobot의 공식 계정 목록입니다. 아래 명시된 계정들만 본인이 운영하는 공식 계정입니다.</p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4">
+            <!-- Entry Account -->
+            <div class="account-card p-5 sm:p-6 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 icon-box-entry text-white rounded-2xl flex items-center justify-center shadow-inner overflow-hidden p-2">
+                        <img src="img/entry_logo.svg" alt="Entry Logo" class="entry-logo brightness-0 invert" onerror="this.src='https://playentry.org/favicon.ico'">
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Entry (엔트리)</h3>
+                            <span class="text-[9px] font-bold text-[#00D674] bg-[#00D674]/10 px-1.5 py-0.5 rounded border border-[#00D674]/20 uppercase">Primary</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-500">@dutkyobot</p>
+                    </div>
+                </div>
+                <a href="https://playentry.org/profile/6065568f645a271188339f9b" target="_blank" class="btn-action">이동</a>
+            </div>
+
+            <!-- GitHub Account -->
+            <div class="account-card p-5 sm:p-6 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 icon-box-github text-white rounded-2xl flex items-center justify-center text-xl shadow-inner">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-sm sm:text-base">GitHub</h3>
+                        <p class="text-xs sm:text-sm text-slate-500">@dutkyobot</p>
+                    </div>
+                </div>
+                <a href="https://github.com/dutkyobot" target="_blank" class="btn-action">이동</a>
+            </div>
+
+            <!-- Email -->
+            <div class="account-card p-5 sm:p-6 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 icon-box-email text-white rounded-2xl flex items-center justify-center text-xl shadow-inner">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Official Email</h3>
+                            <span class="text-[9px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100 uppercase">Primary</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-500">dutkyobot@gmail.com</p>
+                    </div>
+                </div>
+                <a href="mailto:dutkyobot@gmail.com" class="btn-action">작성</a>
+            </div>
+        </div>
+
+        <!-- Warning Section -->
+        <div class="mt-12 bg-blue-50 border border-blue-100 rounded-2xl p-6 shadow-sm">
+            <h4 class="text-blue-800 font-bold flex items-center gap-2 mb-3">
+                <i class="fas fa-info-circle"></i> 필독 안내사항
+            </h4>
+            <div class="text-blue-700 text-sm leading-relaxed">
+                <p class="mb-2">이 사이트는 <span class="font-bold text-blue-900 underline decoration-blue-300">두쿄봇의 공식 사이트</span>이며, <br class="sm:hidden">이 계정들을 제외한 계정은 <span class="font-bold text-blue-900">사칭일 확률이 높습니다.</span></p>
+                <p class="opacity-80">사칭 계정에 속지 않도록 각별히 주의하시기 바랍니다.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-8 text-center text-slate-400 text-xs">
+        &copy; 2026 Dutkyobot. Identity Verification Page.
+    </footer>
+
+</body>
+</html>
