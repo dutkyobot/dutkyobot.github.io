@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dutkyobot | 취미 코딩</title>
+    <!-- Tailwind CSS & FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f2f5f8;
+            color: #1e293b;
+        }
+
+        .header-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-gradient {
+            background: linear-gradient(135deg, #00D674 0%, #2F96FD 100%);
+        }
+
+        .tool-card {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.08);
+            border-color: #3b82f6;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            background: linear-gradient(135deg, #00D674 0%, #2F96FD 100%);
+            border-radius: 4px;
+        }
+
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .profile-link {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 18px 12px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #64748b;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: all 0.2s;
+        }
+
+        .profile-link:hover {
+            background: #f8fafc;
+            color: #3b82f6;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .category-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="header-glass sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-2.5">
+                <div class="w-8 h-8 brand-gradient rounded-lg flex items-center justify-center shadow-sm">
+                    <img src="img/profile2.png" alt="Logo" class="h-6 w-6 rounded" onerror="this.src='https://via.placeholder.com/32?text=D'">
+                </div>
+                <span class="text-lg font-bold tracking-tight text-slate-900">Dutkyobot</span>
+            </a>
+            
+            <nav class="hidden sm:flex items-center space-x-7">
+                <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-blue-600 transition-colors">Home</a>
+                <a href="https://github.com/dutkyobot" target="_blank" class="text-slate-400 hover:text-slate-900"><i class="fab fa-github text-xl"></i></a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-6xl mx-auto w-full px-6 py-12">
+        <div class="flex flex-col lg:flex-row gap-10 items-start">
+            
+            <!-- Sidebar (Profile Area) -->
+            <div class="lg:w-1/3 w-full space-y-6">
+                <div class="tool-card p-10 text-center lg:text-left">
+                    <div class="w-24 h-24 mx-auto lg:mx-0 mb-6">
+                        <div class="w-full h-full brand-gradient rounded-[22px] p-0.5 shadow-sm">
+                            <img src="img/profile2.png" alt="Dutkyobot" class="w-full h-full rounded-[20px] bg-white object-cover" onerror="this.src='https://via.placeholder.com/100?text=D'">
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">Dutkyobot</h2>
+                    <p class="text-blue-500 font-bold text-[11px] mt-1 tracking-widest uppercase">Vibe Coder</p>
+                    <!-- 소개 문구 수정 -->
+                    <p class="text-slate-500 text-sm mt-5 leading-relaxed font-medium">
+                        안녕하세요 두쿄봇입니다!
+                    </p>
+                </div>
+
+                <!-- 2x2 Platform Links -->
+                <div class="link-grid">
+                    <a href="mailto:dutkyobot@gmail.com" class="profile-link shadow-sm">Mail</a>
+                    <a href="https://github.com/dutkyobot" target="_blank" class="profile-link shadow-sm">GitHub</a>
+                    <a href="https://youtube.com/@dutkyobot" target="_blank" class="profile-link shadow-sm">YouTube</a>
+                    <a href="#" class="profile-link shadow-sm">Discord</a>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="lg:w-2/3 w-full">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-slate-900 section-title">My Projects</h3>
+                </div>
+
+                <!-- Tool Grid (ToolHub Only) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+                    <a href="https://dutkyobot.github.io/TOOLBOX" class="tool-card p-6 flex flex-col group">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-5 shadow-sm">
+                            <i class="fas fa-cube text-xl"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-slate-800">ToolHub</h4>
+                        <p class="text-sm text-slate-500 mt-2 mb-6 flex-1 leading-relaxed">
+                            Dutkyobot의 더 많은 스마트 도구들을 한곳에서 만나보세요.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="category-badge bg-blue-50 text-blue-600 font-bold">Collection</span>
+                            <span class="text-xs text-slate-400 group-hover:text-blue-600 font-medium transition-colors">이동하기 <i class="fas fa-arrow-right ml-1"></i></span>
+                        </div>
+                    </a>
+
+                    <!-- Placeholders -->
+                    <div class="tool-card border-dashed bg-slate-50/20 flex flex-col items-center justify-center p-8 border-2">
+                        <div class="text-center opacity-30">
+                            <i class="fas fa-plus text-xl mb-2"></i>
+                            <p class="text-[10px] font-bold uppercase tracking-widest">More Coming</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-slate-400 text-sm">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <span class="font-bold text-slate-900">Dutkyobot</span>
+                <span>&copy; 2026. All Rights Reserved.</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://github.com/dutkyobot" class="hover:text-slate-900"><i class="fab fa-github text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
