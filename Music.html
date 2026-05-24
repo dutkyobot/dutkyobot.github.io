@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>유튜브 타임테이블 플레이어</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      background:linear-gradient(135deg,#eef2f7,#cfd9e6);
+      min-height:100vh;
+      overflow:auto;
+    }
+
+    .app{
+      display:flex;
+      gap:14px;
+      padding:14px;
+      box-sizing:border-box;
+      height:100vh;
+    }
+
+    .panel{
+      background:rgba(255,255,255,0.55);
+      backdrop-filter:blur(22px);
+      border-radius:20px;
+      box-shadow:0 12px 35px rgba(0,0,0,0.12);
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .left{
+      width:340px;
+      min-width:320px;
+      gap:10px;
+    }
+
+    .right{
+      flex:1;
+      gap:12px;
+    }
+
+    input,textarea{
+      width:100%;
+      padding:10px;
+      border:none;
+      border-radius:12px;
+      outline:none;
+      background:rgba(255,255,255,0.75);
+      box-sizing:border-box;
+    }
+
+    button{
+      padding:10px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      background:rgba(255,255,255,0.85);
+      transition:.2s;
+      font-weight:500;
+    }
+
+    button:active{transform:scale(0.97)}
+
+    .playerCard{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .now{
+      font-size:20px;
+      font-weight:700;
+      text-align:center;
+      padding:6px;
+    }
+
+    .iframeWrap{
+      width:100%;
+      height:380px;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    iframe{
+      width:100%;
+      height:100%;
+      border:none;
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+
+    .controls button{
+      flex:1;
+      font-size:16px;
+    }
+
+    .playlist{
+      flex:1;
+      overflow:auto;
+      margin-top:8px;
+    }
+
+    .item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px;
+      margin-bottom:8px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.7);
+      cursor:grab;
+      transition:.15s;
+    }
+
+    .item.active{
+      background:rgba(120,160,255,0.25);
+      border:1px solid rgba(120,160,255,0.4);
+    }
+
+    .item span{
+      flex:1;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+    }
+
+    .playIcon{
+      cursor:pointer;
+      font-size:16px;
+      opacity:0.8;
+    }
+
+    .item button{
+      padding:4px 6px;
+      font-size:12px;
+      margin-left:4px;
+    }
+
+    @media(max-width:900px){
+      .app{flex-direction:column;height:auto}
+      .left{width:100%}
+      .iframeWrap{height:260px}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="panel left">
+    <input id="videoId" placeholder="유튜브 영상 ID" />
+    <textarea id="timeline" rows="10" placeholder="00:00 제목"></textarea>
+
+    <button onclick="generate()">플레이리스트 생성</button>
+  </div>
+
+  <div class="panel right">
+
+    <div class="playerCard">
+      <div class="now" id="now">재생 없음</div>
+
+      <div class="iframeWrap">
+        <div id="player"></div>
+      </div>
+
+      <div class="controls">
+        <button onclick="prev()">⏮</button>
+        <button onclick="next()">⏭</button>
+        <button onclick="toggleShuffle()">🔀</button>
+      </div>
+    </div>
+
+    <div class="playlist" id="list"></div>
+
+  </div>
+
+</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+let playlist=[];
+let order=[];
+let index=0;
+let player;
+let shuffle=false;
+
+function onYouTubeIframeAPIReady(){
+  player=new YT.Player('player',{
+    videoId:'',
+    events:{onStateChange:e=>{if(e.data===0) next();}}
+  });
+}
+
+function parse(t){
+  const p=t.split(':').map(Number);
+  if(p.length===2)return p[0]*60+p[1];
+  if(p.length===3)return p[0]*3600+p[1]*60+p[2];
+  return 0;
+}
+
+function generate(){
+  const id=document.getElementById('videoId').value.trim();
+  const text=document.getElementById('timeline').value;
+
+  playlist=[];
+
+  text.split('\n').forEach(l=>{
+    const m=l.trim().match(/(\d{1,2}:\d{2}(?::\d{2})?)\s*(.*)/);
+    if(m){
+      playlist.push({time:parse(m[1]),title:m[2]||'제목 없음',videoId:id});
+    }
+  });
+
+  playlist.sort((a,b)=>a.time-b.time);
+  order=playlist.map((_,i)=>i);
+  render();
+  play(0);
+}
+
+function render(){
+  const el=document.getElementById('list');
+  el.innerHTML='';
+
+  order.forEach((pi,i)=>{
+    const item=playlist[pi];
+
+    const div=document.createElement('div');
+    div.className='item';
+    div.draggable=true;
+
+    div.ondragstart=e=>e.dataTransfer.setData('from',i);
+    div.ondragover=e=>e.preventDefault();
+    div.ondrop=e=>{
+      const from=+e.dataTransfer.getData('from');
+      const to=i;
+      const moved=order.splice(from,1)[0];
+      order.splice(to,0,moved);
+      render();
+    };
+
+    if(i===index) div.classList.add('active');
+
+    div.innerHTML=`
+      <span>
+        <span class="playIcon" onclick="play(${i})">▶</span>
+        ${item.title}
+      </span>
+      <div>
+        <button onclick="moveUp(${i})">↑</button>
+        <button onclick="moveDown(${i})">↓</button>
+      </div>
+    `;
+
+    el.appendChild(div);
+  });
+}
+
+function moveUp(i){
+  if(i<=0)return;
+  [order[i-1],order[i]]=[order[i],order[i-1]];
+  render();
+}
+
+function moveDown(i){
+  if(i>=order.length-1)return;
+  [order[i+1],order[i]]=[order[i],order[i+1]];
+  render();
+}
+
+function play(i){
+  index=i;
+  const item=playlist[order[index]];
+
+  player.loadVideoById({videoId:item.videoId,startSeconds:item.time});
+
+  document.getElementById('now').innerText=item.title;
+  render();
+}
+
+function next(){
+  if(order.length===0)return;
+  index=(index+1)%order.length;
+  play(index);
+}
+
+function prev(){
+  if(order.length===0)return;
+  index=(index-1+order.length)%order.length;
+  play(index);
+}
+
+function toggleShuffle(){
+  shuffle=!shuffle;
+  if(shuffle){
+    order=[...order].sort(()=>Math.random()-0.5);
+  }else{
+    order=playlist.map((_,i)=>i);
+  }
+  render();
+}
+</script>
+
+</body>
+</html>
