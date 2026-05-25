@@ -420,12 +420,7 @@
       <div class="playlistWrap">
         <div class="playlist panel" id="list"></div>
 
-        <div class="panel left">
-          <input id="videoId" placeholder="영상 ID 입력" />
-          <textarea id="timeline" rows="10" placeholder="타임테이블 입력"></textarea>
-
-          <button onclick="generate()">플레이리스트 생성</button>
-        </div>
+        <div id="inputMount"></div>
       </div>
 
     </div>
@@ -447,15 +442,17 @@ let shuffle=false;
 
 function onYouTubeIframeAPIReady(){
   player=new YT.Player('player',{
+    host:'https://www.youtube-nocookie.com',
     videoId:'',
     playerVars:{
       autoplay:1,
       controls:1,
       rel:0,
       modestbranding:1,
-      iv_load_policy:3,
+      origin:location.origin,
       playsinline:1,
-      origin:location.origin
+      iv_load_policy:3,
+      widget_referrer:location.href
     },
     events:{
       onReady:()=>{
@@ -484,10 +481,16 @@ function parse(t){
 }
 
 function generate(){
-  document.getElementById('initialInput').style.display='none';
   const playerSection=document.getElementById('playerSection');
 
   playerSection.style.display='block';
+
+  const input=document.getElementById('initialInput');
+  const mount=document.getElementById('inputMount');
+
+  if(mount && input && !mount.contains(input)){
+    mount.appendChild(input);
+  }
   const id=document.getElementById('videoId').value.trim();
   const text=document.getElementById('timeline').value;
 
@@ -601,6 +604,8 @@ function play(i){
   }
 
   try{
+    player.stopVideo();
+
     player.loadVideoById({
       videoId:item.videoId,
       startSeconds:item.time
