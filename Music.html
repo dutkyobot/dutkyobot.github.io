@@ -9,121 +9,224 @@
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-      background:linear-gradient(135deg,#eef2f7,#cfd9e6);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.7), transparent 35%),
+        linear-gradient(135deg,#e9eef5,#d5deea);
       min-height:100vh;
       overflow:auto;
+      color:#111827;
     }
 
     .app{
       display:flex;
-      gap:14px;
-      padding:14px;
+      flex-direction:column;
+      gap:22px;
+      padding:20px;
       box-sizing:border-box;
-      height:100vh;
+      min-height:100vh;
+      width:100%;
+      max-width:1400px;
+      margin:0 auto;
+    }
+
+    .desktopLayout{
+      display:grid;
+      grid-template-columns:minmax(460px,560px) minmax(340px,520px);
+      gap:22px;
+      align-items:start;
+      justify-content:center;
+      width:100%;
     }
 
     .panel{
-      background:rgba(255,255,255,0.55);
-      backdrop-filter:blur(22px);
-      border-radius:20px;
-      box-shadow:0 12px 35px rgba(0,0,0,0.12);
-      padding:12px;
+      background:rgba(255,255,255,0.42);
+      backdrop-filter:blur(24px);
+      border:1px solid rgba(255,255,255,0.38);
+      border-radius:26px;
+      box-shadow:0 10px 30px rgba(15,23,42,0.08);
+      padding:16px;
       display:flex;
       flex-direction:column;
-    }
-
-    .left{
-      width:340px;
-      min-width:320px;
-      gap:10px;
-    }
-
-    .right{
-      flex:1;
-      gap:12px;
-    }
-
-    input,textarea{
+      min-width:0;
+      overflow:hidden;
       width:100%;
-      padding:10px;
-      border:none;
-      border-radius:12px;
-      outline:none;
-      background:rgba(255,255,255,0.75);
       box-sizing:border-box;
     }
 
-    button{
-      padding:10px;
-      border:none;
-      border-radius:12px;
-      cursor:pointer;
-      background:rgba(255,255,255,0.85);
-      transition:.2s;
-      font-weight:500;
-    }
-
-    button:active{transform:scale(0.97)}
-
-    .playerCard{
+    .left{
+      width:100%;
+      max-width:520px;
+      margin:0;
+      align-self:stretch;
       display:flex;
       flex-direction:column;
-      gap:10px;
+      gap:14px;
+    }
+
+    .playlistWrap{
+      width:100%;
+      max-width:520px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      box-sizing:border-box;
+      align-self:start;
+    }
+
+    .playerCard{
+      background:rgba(255,255,255,0.42);
+      backdrop-filter:blur(24px);
+      border:1px solid rgba(255,255,255,0.38);
+      border-radius:26px;
+      box-shadow:0 10px 30px rgba(15,23,42,0.08);
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      position:sticky;
+      top:20px;
+      overflow:hidden;
     }
 
     .now{
-      font-size:20px;
+      font-size:22px;
       font-weight:700;
-      text-align:center;
-      padding:6px;
+      color:#111827;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
     .iframeWrap{
       width:100%;
-      height:380px;
-      border-radius:18px;
+      aspect-ratio:16/9;
+      border-radius:22px;
       overflow:hidden;
-      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+      background:#000;
+      position:relative;
     }
 
-    iframe{
-      width:100%;
-      height:100%;
-      border:none;
+    #player,
+    #player iframe{
+      width:100% !important;
+      height:100% !important;
+      border:0;
+      display:block;
     }
 
     .controls{
       display:flex;
-      gap:10px;
       align-items:center;
+      justify-content:center;
+      gap:12px;
     }
 
     .controls button{
-      flex:1;
-      font-size:16px;
+      width:56px;
+      height:56px;
+      border-radius:50%;
+      border:none;
+      background:rgba(255,255,255,0.72);
+      font-size:20px;
+      cursor:pointer;
+      transition:.15s;
+      box-shadow:0 4px 14px rgba(15,23,42,0.08);
+      color:#111827;
+    }
+
+    .controls button:hover{
+      transform:translateY(-1px);
+    }
+
+    input,
+    textarea{
+      width:100%;
+      border:1px solid rgba(255,255,255,0.35);
+      outline:none;
+      border-radius:18px;
+      padding:14px;
+      background:rgba(255,255,255,0.62);
+      box-sizing:border-box;
+      font-size:15px;
+      resize:none;
+      color:#111827;
+      backdrop-filter:blur(10px);
+    }
+
+    .left button{
+      height:54px;
+      border:none;
+      border-radius:18px;
+      background:#111827;
+      color:white;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+      transition:.15s;
+      box-shadow:0 6px 18px rgba(17,24,39,0.18);
+    }
+
+    .left button:hover{
+      transform:translateY(-1px);
     }
 
     .playlist{
-      flex:1;
-      overflow:auto;
-      margin-top:8px;
+      background:rgba(255,255,255,0.24);
+      border:1px solid rgba(255,255,255,0.3);
+      border-radius:26px;
+      padding:10px;
+      max-width:520px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      width:100%;
+      box-sizing:border-box;
     }
 
     .item{
+      min-height:68px;
       display:flex;
-      justify-content:space-between;
       align-items:center;
-      padding:10px;
-      margin-bottom:8px;
-      border-radius:14px;
-      background:rgba(255,255,255,0.7);
+      justify-content:space-between;
+      width:100%;
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,0.68);
       cursor:grab;
       transition:.15s;
+      gap:12px;
+      border:1px solid rgba(255,255,255,0.35);
+      box-sizing:border-box;
+      backdrop-filter:blur(10px);
+    }
+
+    .item.dragging{
+      opacity:.45;
+      transform:scale(.98);
     }
 
     .item.active{
       background:rgba(120,160,255,0.25);
       border:1px solid rgba(120,160,255,0.4);
+    }
+
+    .itemLeft{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex:1;
+      min-width:0;
+      justify-content:flex-start;
+    }
+
+    .title{
+      flex:1;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+      text-align:left;
+      justify-content:flex-start;
+      font-size:15px;
     }
 
     .item span{
@@ -141,15 +244,144 @@
     }
 
     .item button{
-      padding:4px 6px;
+      width:34px;
+      height:34px;
+      border:none;
+      border-radius:10px;
+      background:rgba(255,255,255,0.72);
       font-size:12px;
       margin-left:4px;
+      cursor:pointer;
     }
 
-    @media(max-width:900px){
-      .app{flex-direction:column;height:auto}
-      .left{width:100%}
-      .iframeWrap{height:260px}
+    @media(max-width:1100px){
+      .app{
+        gap:14px;
+        padding:14px;
+      }
+
+      .playerCard{
+        gap:12px;
+      }
+    }
+
+    @media(max-width:1200px){
+      .right,
+      .playerCard,
+      .playlist{
+        max-width:100%;
+      }
+    }
+
+    @media(max-width:980px){
+      .desktopLayout{
+        grid-template-columns:1fr;
+        gap:16px;
+      }
+
+      .playerCard,
+      .playlist,
+      .playlistWrap,
+      .left{
+        max-width:100%;
+      }
+
+      .playerCard{
+        position:relative;
+        top:auto;
+      }
+    }
+
+    @media(max-width:700px){
+      .app{
+        padding:10px;
+      }
+
+      .desktopLayout{
+        width:100%;
+        overflow:hidden;
+      }
+
+      .app{
+        width:100%;
+        max-width:100%;
+      }
+
+      .app{
+        padding:10px;
+        gap:10px;
+      }
+
+      .panel{
+        border-radius:16px;
+        padding:10px;
+      }
+
+      .controls{
+        gap:8px;
+      }
+
+      .controls button{
+        min-height:48px;
+        font-size:18px;
+      }
+
+      .now{
+        font-size:17px;
+      }
+
+      .item{
+        padding:12px 10px;
+      }
+
+      .item button{
+        min-width:36px;
+        min-height:36px;
+      }
+
+      textarea{
+        min-height:160px;
+      }
+    }
+
+    @media(max-width:480px){
+      body{
+        overflow-x:hidden;
+      }
+
+      .app{
+        padding:8px;
+      }
+
+      .panel,
+      .left,
+      .right,
+      .playerCard,
+      .playlist{
+        width:100%;
+        max-width:100%;
+      }
+
+      .controls{
+        justify-content:space-between;
+      }
+
+      .controls button{
+        width:52px;
+        height:52px;
+      }
+
+      .item{
+        flex-direction:row;
+        align-items:center;
+        padding:12px;
+      }
+
+      .item div{
+        width:auto;
+        display:flex;
+        justify-content:flex-end;
+      }
     }
   </style>
 </head>
@@ -158,30 +390,45 @@
 
 <div class="app">
 
-  <div class="panel left">
-    <input id="videoId" placeholder="유튜브 영상 ID" />
-    <textarea id="timeline" rows="10" placeholder="00:00 제목"></textarea>
+  
+
+  <div class="panel left" id="initialInput">
+    <input id="videoId" placeholder="영상 ID 입력" />
+    <textarea id="timeline" rows="10" placeholder="타임테이블 입력"></textarea>
 
     <button onclick="generate()">플레이리스트 생성</button>
   </div>
 
-  <div class="panel right">
+  <div id="playerSection" style="display:none;">
 
-    <div class="playerCard">
-      <div class="now" id="now">재생 없음</div>
+    <div class="desktopLayout">
 
-      <div class="iframeWrap">
-        <div id="player"></div>
+      <div class="playerCard">
+        <div class="now" id="now">재생 없음</div>
+
+        <div class="iframeWrap">
+          <div id="player"></div>
+        </div>
+
+        <div class="controls">
+          <button onclick="prev()">⏮</button>
+          <button onclick="next()">⏭</button>
+          <button id="shuffleBtn" onclick="toggleShuffle()">🔀</button>
+        </div>
       </div>
 
-      <div class="controls">
-        <button onclick="prev()">⏮</button>
-        <button onclick="next()">⏭</button>
-        <button onclick="toggleShuffle()">🔀</button>
+      <div class="playlistWrap">
+        <div class="playlist panel" id="list"></div>
+
+        <div class="panel left">
+          <input id="videoId" placeholder="영상 ID 입력" />
+          <textarea id="timeline" rows="10" placeholder="타임테이블 입력"></textarea>
+
+          <button onclick="generate()">플레이리스트 생성</button>
+        </div>
       </div>
+
     </div>
-
-    <div class="playlist" id="list"></div>
 
   </div>
 
@@ -194,12 +441,35 @@ let playlist=[];
 let order=[];
 let index=0;
 let player;
+let playerReady=false;
+let pendingPlay=null;
 let shuffle=false;
 
 function onYouTubeIframeAPIReady(){
   player=new YT.Player('player',{
     videoId:'',
-    events:{onStateChange:e=>{if(e.data===0) next();}}
+    playerVars:{
+      autoplay:1,
+      controls:1,
+      rel:0,
+      modestbranding:1,
+      iv,
+    events:{
+      onReady:()=>{
+        playerReady=true;
+
+        if(pendingPlay!==null){
+          play(pendingPlay);
+          pendingPlay=null;
+        }
+      },
+      onStateChange:e=>{
+        if(e.data===0) next();
+      },
+      onError:e=>{
+        console.error('YT Error:',e.data);
+      }
+    }
   });
 }
 
@@ -211,8 +481,14 @@ function parse(t){
 }
 
 function generate(){
+  document.getElementById('initialInput').style.display='none';
+  const playerSection=document.getElementById('playerSection');
+
+  playerSection.style.display='block';
   const id=document.getElementById('videoId').value.trim();
   const text=document.getElementById('timeline').value;
+
+  if(!id || !text.trim()) return;
 
   playlist=[];
 
@@ -224,6 +500,8 @@ function generate(){
   });
 
   playlist.sort((a,b)=>a.time-b.time);
+
+  if(playlist.length===0) return;
   order=playlist.map((_,i)=>i);
   render();
   play(0);
@@ -240,23 +518,50 @@ function render(){
     div.className='item';
     div.draggable=true;
 
-    div.ondragstart=e=>e.dataTransfer.setData('from',i);
-    div.ondragover=e=>e.preventDefault();
+    div.ondragstart=e=>{
+      div.classList.add('dragging');
+      e.dataTransfer.effectAllowed='move';
+      e.dataTransfer.setData('from',i);
+    };
+    div.ondragover=e=>{
+      e.preventDefault();
+      e.dataTransfer.dropEffect='move';
+    };
     div.ondrop=e=>{
+      e.preventDefault();
+
       const from=+e.dataTransfer.getData('from');
       const to=i;
-      const moved=order.splice(from,1)[0];
+
+      if(from===to) return;
+
+      const moved=order[from];
+      order.splice(from,1);
       order.splice(to,0,moved);
+
+      if(index===from){
+        index=to;
+      }else if(from<index && to>=index){
+        index--;
+      }else if(from>index && to<=index){
+        index++;
+      }
+
       render();
+    };
+
+    div.ondragend=()=>{
+      div.classList.remove('dragging');
     };
 
     if(i===index) div.classList.add('active');
 
     div.innerHTML=`
-      <span>
+      <div class="itemLeft">
         <span class="playIcon" onclick="play(${i})">▶</span>
-        ${item.title}
-      </span>
+        <div class="title">${item.title}</div>
+      </div>
+
       <div>
         <button onclick="moveUp(${i})">↑</button>
         <button onclick="moveDown(${i})">↓</button>
@@ -281,11 +586,26 @@ function moveDown(i){
 
 function play(i){
   index=i;
-  const item=playlist[order[index]];
 
-  player.loadVideoById({videoId:item.videoId,startSeconds:item.time});
+  const item=playlist[order[index]];
+  if(!item) return;
 
   document.getElementById('now').innerText=item.title;
+
+  if(!playerReady || !player || typeof player.loadVideoById!=='function'){
+    pendingPlay=i;
+    return;
+  }
+
+  try{
+    player.loadVideoById({
+      videoId:item.videoId,
+      startSeconds:item.time
+    });
+  }catch(err){
+    console.error(err);
+  }
+
   render();
 }
 
@@ -303,11 +623,17 @@ function prev(){
 
 function toggleShuffle(){
   shuffle=!shuffle;
+
+  const btn=document.getElementById('shuffleBtn');
+
   if(shuffle){
     order=[...order].sort(()=>Math.random()-0.5);
+    btn.style.background='rgba(120,160,255,0.35)';
   }else{
     order=playlist.map((_,i)=>i);
+    btn.style.background='rgba(255,255,255,0.85)';
   }
+
   render();
 }
 </script>
