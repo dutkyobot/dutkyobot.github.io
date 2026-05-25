@@ -453,7 +453,10 @@ function onYouTubeIframeAPIReady(){
       controls:1,
       rel:0,
       modestbranding:1,
-      iv,
+      iv_load_policy:3,
+      playsinline:1,
+      origin:location.origin
+    },
     events:{
       onReady:()=>{
         playerReady=true;
