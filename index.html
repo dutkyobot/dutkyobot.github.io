@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dutkyobot - 사이트 개편 중</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/profile2.png" type="image/png">
+
+    <!-- Tailwind CSS & FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+
+        /* 기존 [코드 1]과 100% 동일한 스타일 적용 */
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background: #f2f5f8;
+            color: #1e293b;
+        }
+
+        .header-glass {
+            background: rgba(255, 255, 255, .8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, .05);
+        }
+
+        .tool-card {
+            background: #fff;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, .04);
+            transition: .25s cubic-bezier(.02, .01, .47, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .05);
+        }
+
+        /* 메인 카드에도 기존처럼 호버시 반응하도록 동일한 속성 유지 */
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, .08);
+            border-color: #3b82f6;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .brand-gradient {
+            background: linear-gradient(135deg, #00D674 0%, #2F96FD 100%);
+        }
+
+        /* 알림용 핑 애니메이션만 추가 유지 */
+        .pulse-badge {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between">
+
+<!-- Header -->
+<header class="header-glass sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+
+        <a href="#" class="flex items-center space-x-2.5 group">
+            <div class="w-8 h-8 brand-gradient rounded-lg flex items-center justify-center shadow-sm">
+                <img src="img/profile3.png"
+                     class="h-6 w-6 rounded"
+                     alt="Logo"
+                     onerror="this.src='https://via.placeholder.com/32?text=D'">
+            </div>
+
+            <span class="text-lg font-bold tracking-tight text-slate-900">
+                Dutkyobot
+            </span>
+        </a>
+
+        <!-- Status Badge -->
+        <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-slate-200 text-slate-700 border border-slate-300">
+            <span class="w-2 h-2 rounded-full bg-slate-500 mr-2 pulse-badge"></span>
+            페이지 단장 중
+        </div>
+
+    </div>
+</header>
+
+<main class="flex-1 max-w-3xl mx-auto w-full px-6 py-16 flex flex-col justify-center items-center">
+
+    <!-- Maintenance Main Card (기존 tool-card 클래스 그대로 적용) -->
+    <div class="tool-card p-8 sm:p-12 w-full text-center relative overflow-hidden">
+        
+        <!-- Icon Banner (기존 icon-box 스타일에서 크기만 키움) -->
+        <div class="w-16 h-16 brand-gradient rounded-xl flex items-center justify-center mx-auto mb-6 text-white text-3xl shadow-sm">
+            <i class="fas fa-hammer"></i>
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
+            사이트 개편 중입니다
+        </h1>
+
+        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-8">
+            새로운 레포지토리로 코드를 옮기고 페이지 레이아웃을 다시 정리하고 있습니다.
+        </p>
+
+        <!-- Notice Box (알림창) -->
+        <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-5 text-left text-sm max-w-md mx-auto space-y-3">
+            <div class="flex items-center font-bold text-slate-800 border-b border-slate-200 pb-2.5">
+                <i class="fas fa-circle-info text-blue-500 mr-2"></i>
+                현재 상태
+            </div>
+            
+            <div class="grid grid-cols-3 gap-2 text-slate-600">
+                <span class="font-medium text-slate-500">사유</span>
+                <span class="col-span-2 text-slate-800 font-medium">웹사이트 레이아웃 및 디자인 수정</span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-slate-600">
+                <span class="font-medium text-slate-500">영향</span>
+                <span class="col-span-2 text-slate-800 font-medium">페이지 접속 임시 제한</span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-slate-600">
+                <span class="font-medium text-slate-500">진행 상황</span>
+                <span class="col-span-2 text-blue-600 font-semibold flex items-center">
+                    <i class="fas fa-spinner fa-spin text-xs mr-1.5"></i>
+                    작업 진행 중
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+<!-- Footer (기존 코드와 완벽히 동일) -->
+<footer class="py-10 border-t border-slate-200 mt-auto">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-center md:justify-between items-center text-slate-400 text-sm">
+        <div class="flex items-center space-x-2">
+            <span class="font-bold text-slate-900">
+                Dutkyobot
+            </span>
+            <span>
+                &copy; 2026. All Rights Reserved.
+            </span>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
