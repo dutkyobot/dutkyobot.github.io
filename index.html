@@ -3,161 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dutkyobot - 사이트 개편 중</title>
 
-    <!-- Favicon -->
-    <link rel="icon" href="img/profile2.png" type="image/png">
+    <title>D-AI | Dutkyobot</title>
 
-    <!-- Tailwind CSS & FontAwesome -->
+    <link rel="icon" href="img/favicon.png" type="image/png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: "#000000",
+                        surface: "#18181B",
+                        line: "#2A2A2E",
+                        mute: "#9B9BA3",
+                        ink: "#FFFFFF",
+                        mint: "#21D67A",
+                        blue: "#3B9EFF",
+                        discord: "#5865F2",
+                    },
+                    fontFamily: {
+                        sans: ["Pretendard Variable", "Pretendard", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+        /* ==========================================================
+           디자인 토큰
+           - Tailwind config의 색상과 값을 맞춰서, CSS 쪽에서도
+             같은 색을 하드코딩 없이 재사용한다.
+        ========================================================== */
+        :root {
+            --c-mint: #21D67A;
+            --c-blue: #3B9EFF;
+            --c-red: #EF4444;
+            --c-amber: #F5A623;
 
-        /* 기존 [코드 1]과 100% 동일한 스타일 적용 */
+            --dur-header: 0.5s;
+            --ease-header: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Pretendard', sans-serif;
-            background: #f2f5f8;
-            color: #1e293b;
+            background-color: #000000;
+            color: #FFFFFF;
         }
 
-        .header-glass {
-            background: rgba(255, 255, 255, .8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, .05);
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--c-blue);
+            outline-offset: 2px;
+            border-radius: 4px;
         }
 
-        .tool-card {
-            background: #fff;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 0, 0, .04);
-            transition: .25s cubic-bezier(.02, .01, .47, 1);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .05);
+        /* ==========================================================
+           헤더: 스크롤에 따라 풀와이드 바 <-> 플로팅 알약으로 전환
+        ========================================================== */
+        #site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            transition: padding var(--dur-header) var(--ease-header);
         }
 
-        /* 메인 카드에도 기존처럼 호버시 반응하도록 동일한 속성 유지 */
-        .tool-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, .08);
-            border-color: #3b82f6;
-        }
-
-        .icon-box {
-            width: 48px;
-            height: 48px;
+        #header-inner {
+            width: 100%;
+            max-width: 100%;
+            height: 4rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
-            margin-bottom: 16px;
+
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0;
+
+            transition: all var(--dur-header) var(--ease-header);
         }
 
-        .brand-gradient {
-            background: linear-gradient(135deg, #00D674 0%, #2F96FD 100%);
+        #header-content {
+            width: 100%;
+            max-width: 64rem;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        /* 알림용 핑 애니메이션만 추가 유지 */
+        #site-header.is-floating {
+            padding: 1rem;
+        }
+
+        #site-header.is-floating #header-inner {
+            max-width: 64rem;
+            border-radius: 9999px;
+
+            background: linear-gradient(180deg, rgba(30, 30, 34, 0.65) 0%, rgba(24, 24, 27, 0.65) 100%);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow:
+                0 16px 32px -8px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.02);
+        }
+
+        /* ==========================================================
+           공통 컴포넌트
+        ========================================================== */
+        .card {
+            background: #18181B;
+            border: 1px solid #2A2A2E;
+            border-radius: 28px;
+            transition: border-color 0.2s ease;
+        }
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .invite-btn {
+            transition: opacity 0.2s ease;
+        }
+        .invite-btn:hover {
+            opacity: 0.88;
+        }
+
+        .gradient-brand {
+            background: linear-gradient(135deg, var(--c-mint) 0%, var(--c-blue) 100%);
+        }
+
+        /* 상태 배지 핑 애니메이션 */
         .pulse-badge {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
-
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: .5; }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pulse-badge {
+                animation: none;
+            }
+            #site-header,
+            #header-inner,
+            * {
+                transition: none !important;
+            }
+        }
     </style>
 </head>
+<body class="min-h-screen flex flex-col font-sans antialiased">
 
-<body class="min-h-screen flex flex-col justify-between">
+    <header id="site-header">
+        <div id="header-inner">
+            <div id="header-content">
+                <a href="index.html" class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-[0.5rem] gradient-brand flex items-center justify-center">
+                        <img
+                            src="img/icon.png"
+                            alt="D-AI"
+                            class="h-5 w-5 rounded"
+                            onerror="this.src='https://via.placeholder.com/28?text=D'"
+                        >
+                    </div>
+                    <span class="text-lg font-bold tracking-tight text-ink">Dutkyobot</span>
+                </a>
 
-<!-- Header -->
-<header class="header-glass sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-
-        <a href="#" class="flex items-center space-x-2.5 group">
-            <div class="w-8 h-8 brand-gradient rounded-lg flex items-center justify-center shadow-sm">
-                <img src="img/profile3.png"
-                     class="h-6 w-6 rounded"
-                     alt="Logo"
-                     onerror="this.src='https://via.placeholder.com/32?text=D'">
-            </div>
-
-            <span class="text-lg font-bold tracking-tight text-slate-900">
-                Dutkyobot
-            </span>
-        </a>
-
-        <!-- Status Badge -->
-        <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-slate-200 text-slate-700 border border-slate-300">
-            <span class="w-2 h-2 rounded-full bg-slate-500 mr-2 pulse-badge"></span>
-            페이지 단장 중
-        </div>
-
-    </div>
-</header>
-
-<main class="flex-1 max-w-3xl mx-auto w-full px-6 py-16 flex flex-col justify-center items-center">
-
-    <!-- Maintenance Main Card (기존 tool-card 클래스 그대로 적용) -->
-    <div class="tool-card p-8 sm:p-12 w-full text-center relative overflow-hidden">
-        
-        <!-- Icon Banner (기존 icon-box 스타일에서 크기만 키움) -->
-        <div class="w-16 h-16 brand-gradient rounded-xl flex items-center justify-center mx-auto mb-6 text-white text-3xl shadow-sm">
-            <i class="fas fa-hammer"></i>
-        </div>
-
-        <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
-            사이트 개편 중입니다
-        </h1>
-
-        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-8">
-            새로운 레포지토리로 코드를 옮기고 페이지 레이아웃을 다시 정리하고 있습니다.
-        </p>
-
-        <!-- Notice Box (알림창) -->
-        <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-5 text-left text-sm max-w-md mx-auto space-y-3">
-            <div class="flex items-center font-bold text-slate-800 border-b border-slate-200 pb-2.5">
-                <i class="fas fa-circle-info text-blue-500 mr-2"></i>
-                현재 상태
-            </div>
-            
-            <div class="grid grid-cols-3 gap-2 text-slate-600">
-                <span class="font-medium text-slate-500">사유</span>
-                <span class="col-span-2 text-slate-800 font-medium">웹사이트 레이아웃 및 디자인 수정</span>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2 text-slate-600">
-                <span class="font-medium text-slate-500">영향</span>
-                <span class="col-span-2 text-slate-800 font-medium">페이지 접속 임시 제한</span>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2 text-slate-600">
-                <span class="font-medium text-slate-500">진행 상황</span>
-                <span class="col-span-2 text-blue-600 font-semibold flex items-center">
-                    <i class="fas fa-spinner fa-spin text-xs mr-1.5"></i>
-                    작업 진행 중
-                </span>
+                <a
+                    href=""
+                    class="text-sm font-semibold text-mute hover:text-ink transition-colors"
+                >
+                    사이트 개편 중
+                </a>
             </div>
         </div>
+    </header>
 
-    </div>
 
-</main>
+    <main class="flex-1 max-w-3xl mx-auto w-full px-6 pt-32 pb-20 sm:pt-36 sm:pb-28 flex flex-col justify-center">
 
-<!-- Footer (기존 코드와 완벽히 동일) -->
-<footer class="py-10 border-t border-slate-200 mt-auto">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-center md:justify-between items-center text-slate-400 text-sm">
-        <div class="flex items-center space-x-2">
-            <span class="font-bold text-slate-900">
-                Dutkyobot
-            </span>
-            <span>
-                &copy; 2026. All Rights Reserved.
-            </span>
+        <!-- ============================== 개편 안내 카드 ============================== -->
+        <div class="card p-8 sm:p-12 w-full">
+
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink leading-tight">
+                사이트 개편 중입니다.
+            </h1>
+
+            <p class="text-[15px] text-mute mt-4 leading-relaxed max-w-md">
+                더 나은 모습을 보여드리기 위해, 사이트가 나아갈 방향을 다시 고민하고 있습니다.
+            </p>
+
+            <!-- 현재 상태 안내 -->
+            <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+                <div>
+                    <div class="text-[11px] font-semibold text-mute uppercase tracking-widest mb-1.5">사유</div>
+                    <div class="text-sm text-ink font-medium">사이트 방향성 재검토</div>
+                </div>
+
+                <div>
+                    <div class="text-[11px] font-semibold text-mute uppercase tracking-widest mb-1.5">영향</div>
+                    <div class="text-sm text-ink font-medium">페이지 접속 무기한 제한</div>
+                </div>
+
+                <div>
+                    <div class="text-[11px] font-semibold text-mute uppercase tracking-widest mb-1.5">진행 상황</div>
+                    <div class="text-sm text-blue font-semibold flex items-center gap-1.5">
+                        <i class="fas fa-clock text-xs"></i>
+                        작업 진행 예정
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
-</footer>
+
+    </main>
+
+
+    <footer class="py-9 border-t border-line mt-auto">
+        <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row justify-center sm:justify-between items-center text-mute text-sm gap-4">
+            <div class="flex items-center gap-2">
+                <span class="font-bold text-ink">Dutkyobot</span>
+                <span>&copy; 2026. All Rights Reserved.</span>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="text-xs">Powered by Dutkyobot</span>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+    /* ==========================================================
+       헤더: 스크롤 위치에 따라 플로팅 스타일 전환
+    ========================================================== */
+    function initHeader() {
+        var header = document.getElementById("site-header");
+        if (!header) return;
+
+        window.addEventListener(
+            "scroll",
+            function () {
+                header.classList.toggle("is-floating", window.scrollY > 20);
+            },
+            { passive: true }
+        );
+    }
+
+    initHeader();
+    </script>
 
 </body>
 </html>
