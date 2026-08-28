@@ -240,23 +240,28 @@
         #resizer {
             cursor: col-resize;
             flex: none;
-            width: 14px;
-            margin: 0 -3px;
+            width: 8px;
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             z-index: 5;
+            touch-action: none;
+            user-select: none;
         }
         #resizer::after {
             content: "";
-            width: 3px;
-            height: 36px;
+            width: 2px;
+            height: 34px;
             border-radius: 999px;
             background: #2A2A2E;
-            transition: background 0.15s ease;
+            transition: background 0.15s ease, height 0.15s ease;
         }
-        #resizer:hover::after, #resizer.dragging::after { background: #3B9EFF; }
+        #resizer:hover::after, #resizer.dragging::after {
+            background: #3B9EFF;
+            height: 42px;
+        }
 
         #preview-frame { width: 100%; height: 100%; background: #FFFFFF; border: none; display: block; }
 
@@ -331,12 +336,40 @@
         }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+        /* 페이지 내부 확장 모드: 브라우저 F11이 아니라 이 페이지의 작업 영역만 화면을 채운다 */
+        body.playground-fullscreen { overflow: hidden; }
+        #playground-card.playground-expanded {
+            position: fixed;
+            inset: 12px;
+            z-index: 100;
+            width: auto;
+            max-width: none;
+            height: calc(100vh - 24px);
+            display: flex;
+            flex-direction: column;
+            border-radius: 22px;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.65);
+        }
+        #playground-card.playground-expanded #playground-body {
+            flex: 1 1 auto;
+            min-height: 0;
+            height: auto !important;
+        }
+        #playground-card.playground-expanded .workspace-row {
+            min-height: 0;
+        }
+        @media (max-width: 860px) {
+            #playground-card.playground-expanded { inset: 8px; height: calc(100vh - 16px); }
+        }
+
         @media (max-width: 860px) {
             .workspace-row { flex-direction: column; }
             #resizer { display: none; }
             .editor-col, .preview-col { width: 100% !important; }
             .editor-col { height: 380px; }
             .preview-col { height: 460px; }
+            #playground-card.playground-expanded .editor-col,
+            #playground-card.playground-expanded .preview-col { height: 50% !important; }
             #playground-body { height: auto !important; }
         }
 
@@ -351,14 +384,16 @@
     <header id="site-header">
         <div id="header-inner">
             <div id="header-content">
-                <a href="index.html" class="flex items-center space-x-2.5">
-                    <div class="w-8 h-8 rounded-[0.5rem] gradient-brand flex items-center justify-center">
-                        <img src="img/icon.png" alt="D-AI" class="h-5 w-5 rounded" onerror="this.style.display='none'">
-                    </div>
-                    <span class="text-lg font-bold tracking-tight text-ink">Dutkyobot</span>
-                    <i class="fa-solid fa-chevron-right text-[10px] text-mute mx-0.5"></i>
+                <div class="flex items-center space-x-2.5">
+                    <a href="index.html" class="flex items-center space-x-2.5">
+                        <div class="w-8 h-8 rounded-[0.5rem] gradient-brand flex items-center justify-center">
+                            <img src="img/icon.png" alt="D-AI" class="h-5 w-5 rounded" onerror="this.style.display='none'">
+                        </div>
+                        <span class="text-lg font-bold tracking-tight text-ink">Dutkyobot</span>
+                    </a>
+                    <i class="fa-solid fa-chevron-right text-[10px] text-mute mx-0.5" aria-hidden="true"></i>
                     <span class="text-sm font-semibold text-mute">코드 실행기</span>
-                </a>
+                </div>
 
                 <a href="" class="text-sm font-semibold text-mute hover:text-ink transition-colors">
                     사이트 개편 중
@@ -367,11 +402,10 @@
         </div>
     </header>
 
-    <main class="flex-1 max-w-5xl mx-auto w-full px-6 pt-32 pb-20 sm:pt-36 sm:pb-28">
+    <main class="flex-1 max-w-6xl mx-auto w-full px-6 pt-24 pb-20 sm:pt-28 sm:pb-28">
 
         <!-- ============================== 인트로 ============================== -->
         <div class="mb-6">
-            <span class="eyebrow-label text-mint">Tools · Playground</span>
             <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink leading-tight mt-2">
                 코드 실행기
             </h1>
@@ -379,31 +413,10 @@
                 HTML, CSS, JavaScript를 브라우저에서 바로 작성하고 실행해 결과를 확인하세요.
             </p>
 
-            <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
-                <div>
-                    <div class="eyebrow-label mb-1.5">지원 언어</div>
-                    <div class="text-sm text-ink font-medium flex items-center gap-1.5">
-                        <span class="lang-dot dot-html"></span>HTML
-                        <span class="lang-dot dot-css ml-1"></span>CSS
-                        <span class="lang-dot dot-js ml-1"></span>JS
-                    </div>
-                </div>
-                <div>
-                    <div class="eyebrow-label mb-1.5">실행 방식</div>
-                    <div class="text-sm text-ink font-medium">브라우저 내 실시간 렌더링</div>
-                </div>
-                <div>
-                    <div class="eyebrow-label mb-1.5">상태</div>
-                    <div class="text-sm text-mint font-semibold flex items-center gap-1.5">
-                        <span class="w-1.5 h-1.5 rounded-full bg-mint pulse-badge"></span>
-                        정상 작동 중
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- ============================== 플레이그라운드 카드 ============================== -->
-        <div class="card overflow-hidden">
+        <div id="playground-card" class="card overflow-hidden">
 
             <!-- 툴바 -->
             <div class="flex items-center justify-between gap-2 px-4 sm:px-5 py-3 border-b border-line flex-wrap">
@@ -441,7 +454,7 @@
             </div>
 
             <!-- 에디터 + 프리뷰 -->
-            <div id="playground-body" class="p-3 sm:p-4" style="height: 620px;">
+            <div id="playground-body" class="p-3 sm:p-4" style="height: 700px;">
                 <div class="workspace-row flex h-full gap-0">
                     <div class="editor-col panel-inner overflow-hidden min-h-0" style="width: 46%;">
                         <div class="editor-pane">
@@ -712,34 +725,76 @@
     });
 
     document.getElementById("btn-fullscreen").addEventListener("click", function () {
-        if (frame.requestFullscreen) frame.requestFullscreen();
-        else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
+        var card = document.getElementById("playground-card");
+        var expanded = card.classList.toggle("playground-expanded");
+        document.body.classList.toggle("playground-fullscreen", expanded);
+        var icon = this.querySelector("i");
+        icon.className = expanded ? "fa-solid fa-compress text-xs" : "fa-solid fa-expand text-xs";
+        this.title = expanded ? "작업 영역 축소" : "작업 영역 전체 화면";
+        setTimeout(function () {
+            Object.values(editors).forEach(function (ed) { ed.refresh(); });
+        }, 50);
     });
 
     /* ========================================================== 리사이저 ========================================================== */
     var resizer = document.getElementById("resizer");
     var editorCol = document.querySelector(".editor-col");
+    var workspaceRow = document.querySelector(".workspace-row");
     var isDragging = false;
+    var activePointerId = null;
+    var refreshRaf = 0;
 
-    resizer.addEventListener("mousedown", function () {
-        isDragging = true;
-        resizer.classList.add("dragging");
-        document.body.style.userSelect = "none";
-    });
-    window.addEventListener("mousemove", function (e) {
-        if (!isDragging) return;
-        var row = document.querySelector(".workspace-row");
-        var rect = row.getBoundingClientRect();
-        var pct = ((e.clientX - rect.left) / rect.width) * 100;
+    function refreshEditorsSoon() {
+        if (refreshRaf) return;
+        refreshRaf = requestAnimationFrame(function () {
+            refreshRaf = 0;
+            Object.values(editors).forEach(function (ed) { ed.refresh(); });
+        });
+    }
+
+    function updateResizer(clientX) {
+        var rect = workspaceRow.getBoundingClientRect();
+        if (!rect.width) return;
+        var pct = ((clientX - rect.left) / rect.width) * 100;
         pct = Math.min(78, Math.max(22, pct));
         editorCol.style.width = pct + "%";
-        Object.values(editors).forEach(function (ed) { ed.refresh(); });
+        refreshEditorsSoon();
+    }
+
+    resizer.addEventListener("pointerdown", function (e) {
+        if (e.button !== 0 && e.pointerType === "mouse") return;
+        isDragging = true;
+        activePointerId = e.pointerId;
+        resizer.classList.add("dragging");
+        document.body.style.userSelect = "none";
+        document.body.style.cursor = "col-resize";
+        try { resizer.setPointerCapture(e.pointerId); } catch (_) {}
+        updateResizer(e.clientX);
+        e.preventDefault();
     });
-    window.addEventListener("mouseup", function () {
+
+    resizer.addEventListener("pointermove", function (e) {
+        if (!isDragging || e.pointerId !== activePointerId) return;
+        updateResizer(e.clientX);
+        e.preventDefault();
+    });
+
+    function stopResizerDrag(e) {
         if (!isDragging) return;
+        if (e && activePointerId !== null && e.pointerId !== activePointerId) return;
         isDragging = false;
+        activePointerId = null;
         resizer.classList.remove("dragging");
         document.body.style.userSelect = "";
+        document.body.style.cursor = "";
+        if (e) e.preventDefault();
+        try { if (resizer.hasPointerCapture(e.pointerId)) resizer.releasePointerCapture(e.pointerId); } catch (_) {}
+    }
+
+    resizer.addEventListener("pointerup", stopResizerDrag);
+    resizer.addEventListener("pointercancel", stopResizerDrag);
+    resizer.addEventListener("lostpointercapture", function () {
+        if (isDragging) stopResizerDrag();
     });
 
     setTimeout(runCode, 150);
