@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Home | Dutkyobot</title>
+    <title>Dutkyobot</title>
 
     <link rel="icon" href="img/favicon.png" type="image/png">
 
@@ -37,12 +37,11 @@
     <style>
         /* ==========================================================
            디자인 토큰
-           - Tailwind config의 색상과 값을 맞춰서, CSS 쪽에서도
-             같은 색을 하드코딩 없이 재사용한다.
         ========================================================== */
         :root {
             --c-mint: #21D67A;
             --c-blue: #3B9EFF;
+            --c-discord: #5865F2;
             --c-red: #EF4444;
             --c-amber: #F5A623;
 
@@ -131,38 +130,85 @@
             background: #18181B;
             border: 1px solid #2A2A2E;
             border-radius: 28px;
-            transition: border-color 0.2s ease;
+            transition: border-color 0.2s ease, transform 0.2s ease;
         }
         .card:hover {
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .invite-btn {
-            transition: opacity 0.2s ease;
+        .service-link { text-decoration: none; }
+        .service-link:hover .card-arrow {
+            transform: translate(2px, -2px);
         }
-        .invite-btn:hover {
-            opacity: 0.88;
+        .card-arrow {
+            transition: transform 0.2s ease;
         }
 
         .gradient-brand {
             background: linear-gradient(135deg, var(--c-mint) 0%, var(--c-blue) 100%);
         }
 
-        /* 상태 배지 핑 애니메이션 */
-        .pulse-badge {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        /* 카테고리 라벨 옆 이어지는 라인 */
+        .category-rule {
+            height: 1px;
+            background: #2A2A2E;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .5; }
+
+        /* ==========================================================
+           카테고리 사이드바 내비게이션 (데스크톱)
+        ========================================================== */
+        .cat-link {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            text-align: left;
+            padding: 0.6rem 1rem;
+            border-radius: 14px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #9B9BA3;
+            background: transparent;
+            cursor: pointer;
+            transition: color 0.2s ease, background-color 0.2s ease;
+        }
+        .cat-link.is-active {
+            color: #000000;
+            background: #FFFFFF;
+        }
+
+        /* 카테고리 탭 (모바일) */
+        .cat-tab {
+            flex-shrink: 0;
+            padding: 0.45rem 0.95rem;
+            border-radius: 9999px;
+            border: 1px solid #2A2A2E;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: #9B9BA3;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+        .cat-tab.is-active {
+            color: #000000;
+            background: #FFFFFF;
+            border-color: transparent;
+        }
+        .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        .category-section {
+            scroll-margin-top: 6.5rem;
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .pulse-badge {
-                animation: none;
-            }
             #site-header,
             #header-inner,
+            .card,
+            .card-arrow,
+            .cat-link,
+            .cat-link-indicator,
+            .cat-tab,
             * {
                 transition: none !important;
             }
@@ -178,7 +224,7 @@
                     <div class="w-8 h-8 rounded-[0.5rem] gradient-brand flex items-center justify-center">
                         <img
                             src="img/icon.png"
-                            alt="D-AI"
+                            alt="Dutkyobot"
                             class="h-5 w-5 rounded"
                             onerror="this.src='https://via.placeholder.com/28?text=D'"
                         >
@@ -187,50 +233,118 @@
                 </a>
 
                 <a
-                    href=""
-                    class="text-sm font-semibold text-mute hover:text-ink transition-colors"
+                    href="https://github.com/dutkyobot"
+                    target="_blank"
+                    rel="noopener"
+                    class="flex items-center gap-1.5 text-sm font-semibold text-mute hover:text-ink transition-colors"
                 >
-                    사이트 개편 중
+                    <i class="fa-brands fa-github text-base"></i>
+                    <span>GitHub</span>
                 </a>
             </div>
         </div>
     </header>
 
 
-    <main class="flex-1 max-w-3xl mx-auto w-full px-6 pt-32 pb-20 sm:pt-36 sm:pb-28 flex flex-col justify-center">
+    <main class="flex-1 max-w-5xl mx-auto w-full px-6 pt-32 pb-24 sm:pt-40 sm:pb-28">
 
-        <!-- ============================== 개편 안내 카드 ============================== -->
-        <div class="card p-8 sm:p-12 w-full">
-
-            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink leading-tight">
-                사이트 개편 중입니다.
+        <!-- ============================== 인트로 ============================== -->
+        <section class="max-w-2xl">
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-ink leading-tight">
+                만들어둔 서비스들을,<br>한곳에 모아뒀어요.
             </h1>
-
             <p class="text-[15px] text-mute mt-4 leading-relaxed max-w-md">
-                더 나은 모습을 보여드리기 위해, 사이트가 나아갈 방향을 다시 고민하고 있습니다.
+                디스코드 봇부터 자잘한 웹 도구까지, Dutkyobot 아래 있는
+                서비스를 이 페이지에서 바로 찾아 들어갈 수 있어요.
             </p>
+        </section>
 
-            <!-- 현재 상태 안내 -->
-            <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
-                <div>
-                    <div class="text-[11px] font-semibold text-mute uppercase tracking-widest mb-1.5">사유</div>
-                    <div class="text-sm text-ink font-medium">사이트 방향성 재검토</div>
+        <!-- ============================== 카테고리 탭 (모바일) ============================== -->
+        <div class="sm:hidden sticky top-16 z-40 -mx-6 mt-10 px-6 py-3 bg-bg/90 backdrop-blur-md border-b border-line flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <button type="button" class="cat-tab is-active" data-target="cat-discord">디스코드 봇 (1)</button>
+            <button type="button" class="cat-tab" data-target="cat-general">웹 서비스 (2)</button>
+        </div>
+
+        <div class="mt-10 sm:mt-16 flex gap-10">
+
+            <!-- ============================== 카테고리 사이드바 (데스크톱) ============================== -->
+            <nav class="hidden sm:block w-44 shrink-0" aria-label="카테고리">
+                <div class="sticky top-28 space-y-1">
+                    <button type="button" class="cat-link is-active" data-target="cat-discord">디스코드 봇 (1)</button>
+                    <button type="button" class="cat-link" data-target="cat-general">웹 서비스 (2)</button>
                 </div>
+            </nav>
 
-                <div>
-                    <div class="text-[11px] font-semibold text-mute uppercase tracking-widest mb-1.5">영향</div>
-                    <div class="text-sm text-ink font-medium">페이지 접속 무기한 제한</div>
-                </div>
+            <!-- ============================== 서비스 목록 ============================== -->
+            <div class="flex-1 min-w-0 space-y-16">
 
-                <div>
-                    <div class="text-[11px] font-semibold text-mute uppercase tracking-widest mb-1.5">진행 상황</div>
-                    <div class="text-sm text-blue font-semibold flex items-center gap-1.5">
-                        <i class="fas fa-clock text-xs"></i>
-                        작업 진행 예정
+                <section id="cat-discord" class="category-section">
+                    <div class="flex items-center gap-4 mb-5">
+                        <h2 class="text-sm font-semibold text-ink whitespace-nowrap">디스코드 봇</h2>
+                        <div class="category-rule flex-1"></div>
                     </div>
-                </div>
-            </div>
 
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="https://d-ai.dutkyobot.r-e.kr" target="_blank" rel="noopener" class="service-link block h-full">
+                            <div class="card p-6 h-full flex flex-col">
+                                <div class="flex items-start justify-between">
+                                    <div class="w-11 h-11 shrink-0 rounded-2xl bg-discord/15 flex items-center justify-center">
+                                        <i class="fa-brands fa-discord text-discord text-lg"></i>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-up-right-from-square card-arrow text-mute text-sm shrink-0 mt-1"></i>
+                                </div>
+                                <h3 class="text-base font-bold text-ink mt-4">D-AI</h3>
+                                <p class="text-sm text-mute mt-1.5 leading-relaxed">
+                                    멘션 한 번이면 바로 답해요. AI 프로바이더 3개가 순서대로
+                                    대기하고 있어서 하나가 막혀도 대화가 끊기지 않아요.
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <section id="cat-general" class="category-section">
+                    <div class="flex items-center gap-4 mb-5">
+                        <h2 class="text-sm font-semibold text-ink whitespace-nowrap">웹 서비스</h2>
+                        <div class="category-rule flex-1"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="https://todaycard.dutkyobot.r-e.kr" target="_blank" rel="noopener" class="service-link block h-full">
+                            <div class="card p-6 h-full flex flex-col">
+                                <div class="flex items-start justify-between">
+                                    <div class="w-11 h-11 shrink-0 rounded-2xl bg-amber-400/15 flex items-center justify-center">
+                                        <i class="fa-solid fa-cloud-sun text-amber-400 text-lg"></i>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-up-right-from-square card-arrow text-mute text-sm shrink-0 mt-1"></i>
+                                </div>
+                                <h3 class="text-base font-bold text-ink mt-4">오늘의 조각들</h3>
+                                <p class="text-sm text-mute mt-1.5 leading-relaxed">
+                                    오늘 날씨, 옷차림, 일몰 시각, 절기와 명절, 올해 진행률까지
+                                    하루 정보를 카드 한 장으로 모아 보여줘요.
+                                </p>
+                            </div>
+                        </a>
+
+                        <a href="https://tracklist.dutkyobot.r-e.kr" target="_blank" rel="noopener" class="service-link block h-full">
+                            <div class="card p-6 h-full flex flex-col">
+                                <div class="flex items-start justify-between">
+                                    <div class="w-11 h-11 shrink-0 rounded-2xl bg-blue/15 flex items-center justify-center">
+                                        <i class="fa-solid fa-music text-blue text-lg"></i>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-up-right-from-square card-arrow text-mute text-sm shrink-0 mt-1"></i>
+                                </div>
+                                <h3 class="text-base font-bold text-ink mt-4">트랙리스트</h3>
+                                <p class="text-sm text-mute mt-1.5 leading-relaxed">
+                                    영상 설명란의 타임테이블을 붙여넣으면 곡 단위로 나눠서
+                                    끊어 들을 수 있는 재생목록을 만들어줘요.
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+            </div>
         </div>
 
     </main>
@@ -268,6 +382,60 @@
     }
 
     initHeader();
+
+    /* ==========================================================
+       카테고리 사이드바/탭: 스크롤 위치에 따라 활성 카테고리 동기화
+    ========================================================== */
+    function initCategoryNav() {
+        var sections = Array.prototype.slice.call(document.querySelectorAll(".category-section"));
+        var navLinks = document.querySelectorAll(".cat-link, .cat-tab");
+        if (!sections.length || !navLinks.length) return;
+
+        function setActive(id) {
+            navLinks.forEach(function (link) {
+                link.classList.toggle("is-active", link.dataset.target === id);
+            });
+        }
+
+        navLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                var target = document.getElementById(link.dataset.target);
+                if (target) target.scrollIntoView({ behavior: "smooth" });
+            });
+        });
+
+        // 각 섹션의 상단이 기준선(헤더 아래 여유 지점)을 지났는지로 활성 섹션을 판단.
+        // 짧은 섹션이 많아도 안정적으로 하나만 활성화된다.
+        function currentSectionId() {
+            var offset = 120;
+            var current = sections[0].id;
+            for (var i = 0; i < sections.length; i++) {
+                var top = sections[i].getBoundingClientRect().top;
+                if (top - offset <= 0) current = sections[i].id;
+            }
+            // 콘텐츠가 짧아 마지막 섹션의 상단이 기준선까지 못 올라오는 경우 대비:
+            // 문서 맨 아래까지 스크롤됐다면 마지막 섹션을 강제로 활성화한다.
+            var nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+            if (nearBottom) current = sections[sections.length - 1].id;
+            return current;
+        }
+
+        var ticking = false;
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+                setActive(currentSectionId());
+                ticking = false;
+            });
+        }
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll, { passive: true });
+        onScroll();
+    }
+
+    initCategoryNav();
     </script>
 
 </body>
